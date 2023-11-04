@@ -1,0 +1,9 @@
+/.ccls-cache/
+/.west/
+/bootloader/
+/build/
+/modules/
+/tools/
+/zephyr/
+/zmk/
+*.uf2
