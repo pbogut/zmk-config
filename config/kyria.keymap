@@ -6,41 +6,265 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/outputs.h>
 
+#define BASE 0
+#define PROG 1
+#define NAVI 2
+#define ZMK  3
+
+#define KILL    LG(LS(Q))
+#define PSCR_SC LS(PSCRN)
+#define PSCR_RT LG(PSCRN)
+
+&sensors {
+    triggers-per-rotation = <60>;
+};
+
+//    ┌────┬────┬────┬────┬────┬────┐                       ┌────┬────┬────┬────┬────┬────┐
+//    │ 0  │ 1  │ 2  │ 3  │ 4  │ 5  │                       │ 6  │ 7  │ 8  │ 9  │ 10 │ 11 │
+//    ├────┼────┼────┼────┼────┼────┤                       ├────┼────┼────┼────┼────┼────┤
+//    │ 12 │ 13 │ 14 │ 15 │ 16 │ 17 │                       │ 18 │ 19 │ 20 │ 21 │ 22 │ 23 │
+//    ├────┼────┼────┼────┼────┼────┼────┬────┐   ┌────┬────┼────┼────┼────┼────┼────┼────┤
+//    │ 24 │ 25 │ 26 │ 27 │ 28 │ 29 │ 30 │ 31 │   │ 32 │ 33 │ 34 │ 35 │ 36 │ 37 │ 38 │ 39 │
+//    └────┴────┴────┼────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┼────┴────┴────┘
+//                   │ 40 │ 41 │ 42 │ 43 │ 44 │   │ 45 │ 46 │ 47 │ 48 │ 49 │
+//                   └────┴────┴────┴────┴────┘   └────┴────┴────┴────┴────┘
 / {
+    macros {
+        lrpars: left_right_parens {
+            label = "LEFT_RIGHT_PARENS";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LPAR &kp RPAR>;
+        };
+        lrbrc: left_right_braces {
+            label = "LEFT_RIGHT_BRACES";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LBRC &kp RBRC>;
+        };
+        lrbkt: left_right_brackets {
+            label = "LEFT_RIGHT_BRACKETS";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LBKT &kp RBKT>;
+        };
+        tildslh: tilde_forward_slash {
+            label = "TILDE_FORWARD_SLASH";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp TILDE &kp FSLH>;
+        };
+        arrow: arrow {
+            label = "ARROW";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp MINUS &kp GT>;
+        };
+        fatarrow: fat_arrow {
+            label = "FAT_ARROW";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp EQUAL &kp GT>;
+        };
+        ltpipe: lt_pipe {
+            label = "LT_PIPE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LT &kp PIPE>;
+        };
+        pipegt: pipe_gt {
+            label = "PIPE_GT";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp PIPE &kp GT>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+        // left and right parentheses `()`, when typing fast using left and right
+        // shifts. Makes it hard to type )( but who would want that?
+        combo_left_right_parens {
+            timeout-ms = <150>;
+            key-positions = <24 39>;
+            bindings = <&lrpars>;
+        };
+        // tilde and forward slash `~/` - normaly you would nieed to use grave
+        // combo with shift and then slash. We are skipping shift here
+        combo_tilde_slash {
+            timeout-ms = <250>;
+            key-positions = <0 12 38>;
+            bindings = <&tildslh>;
+        };
+        combo_grave {
+            timeout-ms = <150>;
+            key-positions = <0 12>;
+            bindings = <&kp GRAVE>;
+        };
+        combo_minus {
+            timeout-ms = <150>;
+            key-positions = <11 23>;
+            bindings = <&kp MINUS>;
+        };
+        // r. for `->`
+        combo_arrow {
+            timeout-ms = <50>;
+            key-positions = <4 37>;
+            bindings = <&arrow>;
+        };
+        // e. for `=>`
+        combo_fat_arrow {
+            timeout-ms = <50>;
+            key-positions = <3 37>;
+            bindings = <&fatarrow>;
+        };
+        // d. for `|>`
+        combo_gt_pipe {
+            timeout-ms = <50>;
+            key-positions = <16 37>;
+            bindings = <&pipegt>;
+        };
+        // f. for `<|`
+        combo_lt_pipe {
+            timeout-ms = <50>;
+            key-positions = <15 37>;
+            bindings = <&ltpipe>;
+        };
+        // left ctrl + right ctrl = caps word, not using shifts as they are
+        // used to type parentheses
+        combo_caps_word {
+            timeout-ms = <150>;
+            key-positions = <12 23>;
+            bindings = <&caps_word>;
+        };
+        combo_lbkt_rbkt {
+            timeout-ms = <150>;
+            key-positions = <27 28>;
+            layers = <PROG>;
+            bindings = <&lrbkt>;
+        };
+        combo_lbrc_rbrc {
+            timeout-ms = <150>;
+            key-positions = <15 16>;
+            layers = <PROG>;
+            bindings = <&lrbrc>;
+        };
+    };
+
+    behaviors {
+      tl: tap_layer {
+        compatible = "zmk,behavior-hold-tap";
+        label = "TAP_LAYER";
+        #binding-cells = <2>;
+        flavor = "hold-preferred";
+        tapping-term-ms = <250>;
+        bindings = <&mo>, <&kp>;
+      };
+      tk: tap_key {
+        compatible = "zmk,behavior-hold-tap";
+        label = "TAP_KEY";
+        #binding-cells = <2>;
+        flavor = "hold-preferred";
+        tapping-term-ms = <250>;
+        bindings = <&kp>, <&kp>;
+      };
+      hbs: h_backspace {
+        compatible = "zmk,behavior-mod-morph";
+        label = "H_BACKSPACE";
+        #binding-cells = <0>;
+        bindings = <&kp H>, <&kp BSPC>;
+        mods = <(MOD_LCTL)>;
+      };
+      ddel: d_delete {
+        compatible = "zmk,behavior-mod-morph";
+        label = "D_DELETE";
+        #binding-cells = <0>;
+        bindings = <&kp D>, <&kp DEL>;
+        mods = <(MOD_RCTL)>;
+      };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
-// ---------------------------------------------------------------------------------------------------------------------------------
-// |  ESC  |  Q  |  W  |  E   |  R   |  T   |                                          |  Y   |  U    |  I    |  O   |   P   |   \  |
-// |  TAB  |  A  |  S  |  D   |  F   |  G   |                                          |  H   |  J    |  K    |  L   |   ;   |   '  |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   | L SHIFT | L SHIFT |  | LAYER 1 | L SHIFT |  N   |  M    |  ,    |  .   |   /   | CTRL |
-//                     | GUI  | DEL  | RET  |  SPACE  |   ESC   |  |   RET   |  SPACE  | TAB  | BSPC  | R-ALT |
+        BASE {
             bindings = <
-    &kp ESC   &kp Q &kp W &kp E &kp R &kp T                                                &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSLH
-    &kp TAB   &kp A &kp S &kp D &kp F &kp G                                                &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-    &kp LSHFT &kp Z &kp X &kp C &kp V &kp B &kp LSHFT &kp LSHFT        &mo 1    &kp LSHFT  &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp RCTRL
-                     &kp LGUI &kp DEL &kp RET &kp SPACE &kp ESC        &kp RET  &kp SPACE  &kp TAB &kp BSPC &kp RALT
+//    ┌────────────┬───┬───┬───────┬──────┬──────┐                                 ┌──────┬──────┬──────┬───┬───┬──────────┐
+//    │  PROG tab  │ Q │ W │   E   │  R   │  T   │                                 │  Y   │  U   │  I   │ O │ P │  PROG \  │
+//    ├────────────┼───┼───┼───────┼──────┼──────┤                                 ├──────┼──────┼──────┼───┼───┼──────────┤
+//    │  lctrl esc │ A │ S │ d/del │  F   │  G   │                                 │ h/bs │  J   │  K   │ L │ ; │  rctrl ' │
+//    ├────────────┼───┼───┼───────┼──────┼──────┼─────┬────────┐   ┌────────┬─────┼──────┼──────┼──────┼───┼───┼──────────┤
+//    │   lshft (  │ Z │ X │   C   │  V   │  B   │  [  │  ZMK ` │   │  ZMK - │  ]  │  N   │  M   │  ,   │ . │ / │  rshft ) │
+//    └────────────┴───┴───┼───────┼──────┼──────┼─────┼────────┤   ├────────┼─────┼──────┼──────┼──────┼───┴───┴──────────┘
+//                         │ mply  │ lgui │ lalt │ spc │  NAVI  │   │  NAVI  │ ret │ ralt │ rgui │ ralt │
+//                         └───────┴──────┴──────┴─────┴────────┘   └────────┴─────┴──────┴──────┴──────┘
+  &tl PROG TAB     &kp Q   &kp W   &kp E      &kp R      &kp T                                                                 &kp Y      &kp U      &kp I       &kp O     &kp P      &tl PROG BSLH
+  &tk LCTRL ESC    &kp A   &kp S   &ddel      &kp F      &kp G                                                                 &hbs       &kp J      &kp K       &kp L     &kp SEMI   &tk RCTRL SQT
+  &tk LSHFT LPAR   &kp Z   &kp X   &kp C      &kp V      &kp B      &kp LBKT    &tl ZMK GRAVE       &tl ZMK MINUS   &kp RBKT   &kp N      &kp M      &kp COMMA   &kp DOT   &kp FSLH   &tk RSHFT RPAR
+                                   &kp K_PP   &kp LGUI   &kp LALT   &kp SPACE   &mo NAVI            &mo NAVI        &kp RET    &kp RALT   &kp RGUI   &kp RALT
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
-        function_layer {
-// ---------------------------------------------------------------------------------------------------------------------------------
-// |       |      |BT_CLR|BTSEL0|BTSEL1|BTSEL2|                                         |      |      |      |      |      |      |
-// |       |      |      |BTSEL3|BTSEL4|      |                                         |      |      |      |      |      |      |
-// |       |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |
-//                       |      |      |      |      |      |      |      |      |      |      |      |      |
+        PROG {
             bindings = <
-    &trans &trans &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2              &trans &trans &trans &trans &trans &trans
-    &trans &trans &trans     &bt BT_SEL 3 &bt BT_SEL 4 &trans                    &trans &trans &trans &trans &trans &trans
-    &trans &trans &trans &trans &trans &trans &trans &trans        &trans &trans &trans &trans &trans &trans &trans &trans
-                         &trans &trans &trans &trans &trans        &trans &trans &trans &trans &trans
+//    ┌────┬───┬───┬────┬────┬────┐                       ┌────┬────┬────┬───┬─────┬────┐
+//    │    │ ! │ * │ $  │ -  │ _  │                       │ .  │ 7  │ 8  │ 9 │  +  │    │
+//    ├────┼───┼───┼────┼────┼────┤                       ├────┼────┼────┼───┼─────┼────┤
+//    │    │ & │ # │ ^  │ {  │ }  │                       │ bs │ 4  │ 5  │ 6 │  =  │    │
+//    ├────┼───┼───┼────┼────┼────┼────┬────┐   ┌────┬────┼────┼────┼────┼───┼─────┼────┤
+//    │    │ ~ │ % │ @  │ [  │ ]  │    │    │   │    │    │ 0  │ 1  │ 2  │ 3 │ ret │    │
+//    └────┴───┴───┼────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┼───┴─────┴────┘
+//                 │    │    │    │    │    │   │    │    │    │    │    │
+//                 └────┴────┴────┴────┴────┘   └────┴────┴────┴────┴────┘
+  &trans   &kp EXCL    &kp ASTRK   &kp DLLR    &kp MINUS   &kp UNDER                                           &kp DOT    &kp N7   &kp N8   &kp N9   &kp PLUS    &trans
+  &trans   &kp AMPS    &kp HASH    &kp CARET   &kp LBRC    &kp RBRC                                            &kp BSPC   &kp N4   &kp N5   &kp N6   &kp EQUAL   &trans
+  &trans   &kp TILDE   &kp PRCNT   &kp AT      &kp LBKT    &kp RBKT    &trans   &trans       &trans   &trans   &kp N0     &kp N1   &kp N2   &kp N3   &kp RET     &trans
+                                   &trans      &trans      &trans      &trans   &trans       &trans   &trans   &trans     &trans   &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
+        };
+        NAVI {
+            bindings = <
+//    ┌─────────┬────┬─────┬─────┬─────┬──────┐                       ┌──────┬──────┬───────┬───────┬──────┬────┐
+//    │ PSCR_SC │ F1 │ F2  │ F3  │ F4  │ KILL │                       │ home │ end  │       │       │ pgup │    │
+//    ├─────────┼────┼─────┼─────┼─────┼──────┤                       ├──────┼──────┼───────┼───────┼──────┼────┤
+//    │  PSCRN  │ F5 │ F6  │ F7  │ F8  │      │                       │ left │ down │  up   │ right │      │    │
+//    ├─────────┼────┼─────┼─────┼─────┼──────┼────┬────┐   ┌────┬────┼──────┼──────┼───────┼───────┼──────┼────┤
+//    │ PSCR_RT │ F9 │ F10 │ F11 │ F12 │      │    │    │   │    │    │ pgdn │ lalt │ lctrl │  del  │      │    │
+//    └─────────┴────┴─────┼─────┼─────┼──────┼────┼────┤   ├────┼────┼──────┼──────┼───────┼───────┴──────┴────┘
+//                         │     │     │      │    │    │   │    │    │      │      │       │
+//                         └─────┴─────┴──────┴────┴────┘   └────┴────┴──────┴──────┴───────┘
+  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL                                           &kp HOME    &kp END    &trans      &trans      &kp PG_UP   &trans
+  &kp PSCRN     &kp F5   &kp F6    &kp F7    &kp F8    &trans                                             &kp LEFT    &kp DOWN   &kp UP      &kp RIGHT   &trans      &trans
+  &kp PSCR_RT   &kp F9   &kp F10   &kp F11   &kp F12   &trans     &trans   &trans       &trans   &trans   &kp PG_DN   &kp LALT   &kp LCTRL   &kp DEL     &trans      &trans
+                                   &trans    &trans    &trans     &trans   &trans       &trans   &trans   &trans      &trans     &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
+        };
+        ZMK {
+            bindings = <
+//    ┌────┬───────┬───────┬────────┬────────┬────┐                       ┌────┬─────────┬─────────┬─────────┬────┬────┐
+//    │    │ bt> 0 │ bt> 1 │ bt> 2  │ bt> 3  │    │                       │    │ ep TOG  │  ep ON  │ ep OFF  │    │    │
+//    ├────┼───────┼───────┼────────┼────────┼────┤                       ├────┼─────────┼─────────┼─────────┼────┼────┤
+//    │    │ bt> 4 │       │        │ BT_CLR │    │                       │    │ out TOG │ out USB │ out BLE │    │    │
+//    ├────┼───────┼───────┼────────┼────────┼────┼────┬────┐   ┌────┬────┼────┼─────────┼─────────┼─────────┼────┼────┤
+//    │    │       │       │ BT_PRV │ BT_NXT │    │    │    │   │    │    │    │         │         │         │    │    │
+//    └────┴───────┴───────┼────────┼────────┼────┼────┼────┤   ├────┼────┼────┼─────────┼─────────┼─────────┴────┴────┘
+//                         │        │        │    │    │    │   │    │    │    │         │         │
+//                         └────────┴────────┴────┴────┴────┘   └────┴────┴────┴─────────┴─────────┘
+  &trans   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &trans                                           &trans   &ext_power EP_TOG   &ext_power EP_ON   &ext_power EP_OFF   &trans   &trans
+  &trans   &bt BT_SEL 4   &trans         &trans         &bt BT_CLR     &trans                                           &trans   &out OUT_TOG        &out OUT_USB       &out OUT_BLE        &trans   &trans
+  &trans   &trans         &trans         &bt BT_PRV     &bt BT_NXT     &trans   &trans   &trans       &trans   &trans   &trans   &trans              &trans             &trans              &trans   &trans
+                                         &trans         &trans         &trans   &trans   &trans       &trans   &trans   &trans   &trans              &trans
+            >;
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };
