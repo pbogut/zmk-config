@@ -84,10 +84,12 @@ if [[ $action == "init" ]]; then
     west init -l config
     west update
     west zephyr-export
+    git -C "$dir/zmk" apply < "$dir/patch/nice_view_battery_percentage.patch"
 fi
 
 if [[ $action == "update" ]]; then
     west update
+    git -C "$dir/zmk" apply < "$dir/patch/nice_view_battery_percentage.patch"
 fi
 
 if [[ $action == "cleanup" ]]; then
