@@ -84,11 +84,13 @@ if [[ $action == "init" ]]; then
     west init -l config
     west update
     west zephyr-export
+    cp "$dir/config/logo.c" "$dir/zmk/app/boards/shields/nice_view/widgets/art.c"
     git -C "$dir/zmk" apply < "$dir/patch/nice_view_battery_percentage.patch"
 fi
 
 if [[ $action == "update" ]]; then
     west update
+    cp "$dir/config/logo.c" "$dir/zmk/app/boards/shields/nice_view/widgets/art.c"
     git -C "$dir/zmk" apply < "$dir/patch/nice_view_battery_percentage.patch"
 fi
 
