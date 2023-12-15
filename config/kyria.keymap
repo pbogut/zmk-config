@@ -257,18 +257,18 @@
         };
         NAVI {
             bindings = <
-//    ┌─────────┬────┬─────┬─────┬─────┬─────────┐                       ┌──────┬──────┬───────┬───────┬──────┬────┐
-//    │ PSCR_SC │ F1 │ F2  │ F3  │ F4  │  KILL   │                       │ home │ end  │       │       │ pgup │    │
-//    ├─────────┼────┼─────┼─────┼─────┼─────────┤                       ├──────┼──────┼───────┼───────┼──────┼────┤
-//    │         │ F5 │ F6  │ F7  │ F8  │  PSCRN  │                       │ left │ down │  up   │ right │      │    │
-//    ├─────────┼────┼─────┼─────┼─────┼─────────┼────┬────┐   ┌────┬────┼──────┼──────┼───────┼───────┼──────┼────┤
-//    │         │ F9 │ F10 │ F11 │ F12 │ PSCR_RT │    │    │   │    │    │ pgdn │ lalt │ lctrl │  del  │      │    │
-//    └─────────┴────┴─────┼─────┼─────┼─────────┼────┼────┤   ├────┼────┼──────┼──────┼───────┼───────┴──────┴────┘
-//                         │     │     │         │    │    │   │    │    │      │      │       │
-//                         └─────┴─────┴─────────┴────┴────┘   └────┴────┴──────┴──────┴───────┘
-  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL                                              &kp HOME    &kp END    &trans      &trans      &kp PG_UP   &trans
-  &trans        &kp F5   &kp F6    &kp F7    &kp F8    &kp PSCRN                                             &kp LEFT    &kp DOWN   &kp UP      &kp RIGHT   &trans      &trans
-  &trans        &kp F9   &kp F10   &kp F11   &kp F12   &kp PSCR_RT   &trans   &trans       &trans   &trans   &kp PG_DN   &kp LALT   &kp LCTRL   &kp DEL     &trans      &trans
+//    ┌─────────┬────┬─────┬─────┬─────┬─────────┐                       ┌──────┬──────┬────────┬────────┬──────┬────┐
+//    │ PSCR_SC │ F1 │ F2  │ F3  │ F4  │  KILL   │                       │ home │ end  │ BT_PRV │ BT_NXT │ pgup │    │
+//    ├─────────┼────┼─────┼─────┼─────┼─────────┤                       ├──────┼──────┼────────┼────────┼──────┼────┤
+//    │         │ F5 │ F6  │ F7  │ F8  │  PSCRN  │                       │ left │ down │   up   │ right  │      │    │
+//    ├─────────┼────┼─────┼─────┼─────┼─────────┼────┬────┐   ┌────┬────┼──────┼──────┼────────┼────────┼──────┼────┤
+//    │         │ F9 │ F10 │ F11 │ F12 │ PSCR_RT │    │    │   │    │    │ pgdn │ lalt │ lctrl  │  del   │      │    │
+//    └─────────┴────┴─────┼─────┼─────┼─────────┼────┼────┤   ├────┼────┼──────┼──────┼────────┼────────┴──────┴────┘
+//                         │     │     │         │    │    │   │    │    │      │      │        │
+//                         └─────┴─────┴─────────┴────┴────┘   └────┴────┴──────┴──────┴────────┘
+  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL                                              &kp HOME    &kp END    &bt BT_PRV   &bt BT_NXT   &kp PG_UP   &trans
+  &trans        &kp F5   &kp F6    &kp F7    &kp F8    &kp PSCRN                                             &kp LEFT    &kp DOWN   &kp UP       &kp RIGHT    &trans      &trans
+  &trans        &kp F9   &kp F10   &kp F11   &kp F12   &kp PSCR_RT   &trans   &trans       &trans   &trans   &kp PG_DN   &kp LALT   &kp LCTRL    &kp DEL      &trans      &trans
                                    &trans    &trans    &trans        &trans   &trans       &trans   &trans   &trans      &trans     &trans
             >;
 
