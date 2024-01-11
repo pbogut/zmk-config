@@ -1,0 +1,8 @@
+file_format: "1"
+id: dactyl_gaming
+name: Dactyl Gaming
+type: shield
+url: https://github.com/pbogut/zmk-dactyl-gaming-shield-module
+requires: [pro_micro]
+features:
+  - keys

@@ -1,0 +1,6 @@
+if SHIELD_DACTYL_GAMING
+
+config ZMK_KEYBOARD_NAME
+    default "Dactyl Gaming"
+
+endif
