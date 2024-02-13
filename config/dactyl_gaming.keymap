@@ -11,19 +11,38 @@
 #include <dt-bindings/zmk/outputs.h>
 
 #define BASE 0
-#define L1 1
-#define L2 2
+#define WIN 1
+#define L1 2
+#define L2 3
+#define L1_WIN 4
 
 #define KILL    LG(LS(Q))
 #define SCR_PIC LC(PSCRN)
 #define SCR_VID LS(LC(PSCRN))
 #define STM_OVR LG(LS(LC(LA(PSCRN))))
+#define SCR_PIC_WIN LS(LC(I))
+#define SCR_VID_WIN LS(LC(S))
 
 &caps_word {
     continue-list = <UNDERSCORE MINUS>;
 };
 
 / {
+    macros {
+        bt0: bt_0 {
+            label = "BT_0";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&to BASE &bt BT_SEL 0 &tog L2>;
+        };
+        bt3: bt_3_win {
+            label = "BT_3_WIN";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&to WIN &bt BT_SEL 3 &tog L2>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -54,6 +73,35 @@
                                             &kp SPACE   &kp C
                                             &kp G       &kp O
                                             &mo L1      &mo L2
+            >;
+        };
+        WIN {
+            bindings = <
+//    ┌────┬────┬────┬────┬────────┬────┐
+//    │    │    │    │    │        │    │
+//    ├────┼────┼────┼────┼────────┼────┤
+//    │    │    │    │    │        │    │
+//    ├────┼────┼────┼────┼────────┼────┤
+//    │    │    │    │    │        │    │
+//    ├────┼────┼────┼────┼────────┼────┤
+//    │    │    │    │    │        │    │
+//    └────┴────┼────┼────┼────────┴────┘
+//              │    │    │
+//              └────┴────┼────────┬────┐
+//                        │        │    │
+//                        ├────────┼────┤
+//                        │        │    │
+//                        ├────────┼────┤
+//                        │ L1_WIN │    │
+//                        └────────┴────┘
+  &trans   &trans   &trans   &trans   &trans       &trans
+  &trans   &trans   &trans   &trans   &trans       &trans
+  &trans   &trans   &trans   &trans   &trans       &trans
+  &trans   &trans   &trans   &trans   &trans       &trans
+                    &trans   &trans
+                                      &trans       &trans
+                                      &trans       &trans
+                                      &mo L1_WIN   &trans
             >;
         };
         L1 {
@@ -87,33 +135,61 @@
         };
         L2 {
             bindings = <
-//    ┌────┬────┬───────┬───────┬────────┬──────┐
-//    │ F1 │ F2 │       │       │  F11   │ F12  │
-//    ├────┼────┼───────┼───────┼────────┼──────┤
-//    │    │    │ bt> 0 │ bt> 1 │ bt> 2  │      │
-//    ├────┼────┼───────┼───────┼────────┼──────┤
-//    │    │    │ bt> 3 │ bt> 4 │ BT_CLR │      │
-//    ├────┼────┼───────┼───────┼────────┼──────┤
-//    │    │    │       │       │  RST   │ BOOT │
-//    └────┴────┼───────┼───────┼────────┴──────┘
-//              │       │       │
-//              └───────┴───────┼────────┬──────┐
-//                              │        │      │
-//                              ├────────┼──────┤
-//                              │        │      │
-//                              ├────────┼──────┤
-//                              │        │      │
-//                              └────────┴──────┘
-  &kp F1   &kp F2   &trans         &trans         &kp F11        &kp F12
-  &trans   &trans   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &trans
-  &trans   &trans   &bt BT_SEL 3   &bt BT_SEL 4   &bt BT_CLR     &trans
-  &trans   &trans   &trans         &trans         &sys_reset     &bootloader
-                    &trans         &trans
-                                                  &trans         &trans
-                                                  &trans         &trans
-                                                  &trans         &trans
+//    ┌────┬────┬──────┬───────┬────────┬──────┐
+//    │ F1 │ F2 │      │       │  F11   │ F12  │
+//    ├────┼────┼──────┼───────┼────────┼──────┤
+//    │    │    │ &bt0 │ bt> 1 │ bt> 2  │      │
+//    ├────┼────┼──────┼───────┼────────┼──────┤
+//    │    │    │ &bt3 │ bt> 4 │ BT_CLR │      │
+//    ├────┼────┼──────┼───────┼────────┼──────┤
+//    │    │    │      │       │  RST   │ BOOT │
+//    └────┴────┼──────┼───────┼────────┴──────┘
+//              │      │       │
+//              └──────┴───────┼────────┬──────┐
+//                             │        │      │
+//                             ├────────┼──────┤
+//                             │        │      │
+//                             ├────────┼──────┤
+//                             │        │      │
+//                             └────────┴──────┘
+  &kp F1   &kp F2   &trans   &trans         &kp F11        &kp F12
+  &trans   &trans   &bt0     &bt BT_SEL 1   &bt BT_SEL 2   &trans
+  &trans   &trans   &bt3     &bt BT_SEL 4   &bt BT_CLR     &trans
+  &trans   &trans   &trans   &trans         &sys_reset     &bootloader
+                    &trans   &trans
+                                            &trans         &trans
+                                            &trans         &trans
+                                            &trans         &trans
+            >;
+        };
+        L1_WIN {
+            bindings = <
+//    ┌─────────────┬────┬────┬────┬────┬────┐
+//    │      `      │ 1  │ 2  │ 3  │ 4  │ 5  │
+//    ├─────────────┼────┼────┼────┼────┼────┤
+//    │ SCR_PIC_WIN │    │    │    │    │    │
+//    ├─────────────┼────┼────┼────┼────┼────┤
+//    │ SCR_VID_WIN │    │    │    │    │    │
+//    ├─────────────┼────┼────┼────┼────┼────┤
+//    │   STM_OVR   │ 6  │ 7  │ 8  │ 9  │ 0  │
+//    └─────────────┴────┼────┼────┼────┴────┘
+//                       │    │    │
+//                       └────┴────┼────┬────┐
+//                                 │    │    │
+//                                 ├────┼────┤
+//                                 │    │    │
+//                                 ├────┼────┤
+//                                 │    │    │
+//                                 └────┴────┘
+  &kp GRAVE         &kp N1   &kp N2   &kp N3   &kp N4   &kp N5
+  &kp SCR_PIC_WIN   &trans   &trans   &trans   &trans   &trans
+  &kp SCR_VID_WIN   &trans   &trans   &trans   &trans   &trans
+  &kp STM_OVR       &kp N6   &kp N7   &kp N8   &kp N9   &kp N0
+                             &trans   &trans
+                                               &trans   &trans
+                                               &trans   &trans
+                                               &trans   &trans
             >;
         };
     };
 };
-
