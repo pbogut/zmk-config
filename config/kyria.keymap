@@ -13,7 +13,8 @@
 #define BASE 0
 #define PROG 1
 #define NAVI 2
-#define ZMK  3
+#define SPEC 3
+#define ZMK  4
 
 #define KILL    LG(LS(Q))
 #define PSCR_SC LS(PSCRN)
@@ -38,6 +39,20 @@
 //                   └────┴────┴────┴────┴────┘   └────┴────┴────┴────┴────┘
 / {
     macros {
+        vt: vt {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_press &kp LALT>
+                     , <&macro_press &kp LCTRL>
+                     , <&macro_param_1to1>
+                     , <&macro_press &kp MACRO_PLACEHOLDER>
+                     , <&macro_pause_for_release>
+                     , <&macro_param_1to1>
+                     , <&macro_release &kp MACRO_PLACEHOLDER>
+                     , <&macro_release &kp LCTRL>
+                     , <&macro_release &kp LALT>
+                     ;
+        };
         lrpars: left_right_parens {
             label = "LEFT_RIGHT_PARENS";
             compatible = "zmk,behavior-macro";
@@ -223,19 +238,19 @@
 
         BASE {
             bindings = <
-//    ┌────────────┬───┬───┬───────┬──────┬──────┐                                 ┌──────┬──────┬──────┬───┬───┬──────────┐
-//    │ PROG tab ~ │ Q │ W │   E   │  R   │  T   │                                 │  Y   │  U   │  I   │ O │ P │ PROG \ - │
-//    ├────────────┼───┼───┼───────┼──────┼──────┤                                 ├──────┼──────┼──────┼───┼───┼──────────┤
-//    │  lctrl esc │ A │ S │ d/del │  F   │  G   │                                 │ h/bs │  J   │  K   │ L │ ; │  rctrl ' │
-//    ├────────────┼───┼───┼───────┼──────┼──────┼─────┬────────┐   ┌────────┬─────┼──────┼──────┼──────┼───┼───┼──────────┤
-//    │   lshft (  │ Z │ X │   C   │  V   │  B   │  [  │  ZMK ` │   │  ZMK - │  ]  │  N   │  M   │  ,   │ . │ / │  rshft ) │
-//    └────────────┴───┴───┼───────┼──────┼──────┼─────┼────────┤   ├────────┼─────┼──────┼──────┼──────┼───┴───┴──────────┘
-//                         │ mply  │ lgui │ lalt │ spc │  NAVI  │   │  NAVI  │ ret │ ralt │ rgui │ ralt │
-//                         └───────┴──────┴──────┴─────┴────────┘   └────────┴─────┴──────┴──────┴──────┘
-  &tl_tabtild PROG 0   &kp Q   &kp W   &kp E      &kp R      &kp T                                                                 &kp Y      &kp U      &kp I       &kp O     &kp P      &tl_bslhmin PROG 0
-  &tk LCTRL ESC        &kp A   &kp S   &ddel      &kp F      &kp G                                                                 &hbs       &kp J      &kp K       &kp L     &kp SEMI   &tk RCTRL SQT
-  &tk LSHFT LPAR       &kp Z   &kp X   &kp C      &kp V      &kp B      &kp LBKT    &tl ZMK GRAVE       &tl ZMK MINUS   &kp RBKT   &kp N      &kp M      &kp COMMA   &kp DOT   &kp FSLH   &tk RSHFT RPAR
-                                       &kp K_PP   &kp LGUI   &kp LALT   &kp SPACE   &mo NAVI            &mo NAVI        &kp RET    &kp RALT   &kp RGUI   &kp RALT
+//    ┌────────────┬───┬───┬───────┬──────┬──────┐                                     ┌──────┬──────┬──────┬───┬───┬──────────┐
+//    │ PROG tab ~ │ Q │ W │   E   │  R   │  T   │                                     │  Y   │  U   │  I   │ O │ P │ PROG \ - │
+//    ├────────────┼───┼───┼───────┼──────┼──────┤                                     ├──────┼──────┼──────┼───┼───┼──────────┤
+//    │  lctrl esc │ A │ S │ d/del │  F   │  G   │                                     │ h/bs │  J   │  K   │ L │ ; │  rctrl ' │
+//    ├────────────┼───┼───┼───────┼──────┼──────┼─────────┬────────┐   ┌────────┬─────┼──────┼──────┼──────┼───┼───┼──────────┤
+//    │   lshft (  │ Z │ X │   C   │  V   │  B   │  SPEC [ │  ZMK ` │   │  ZMK - │  ]  │  N   │  M   │  ,   │ . │ / │  rshft ) │
+//    └────────────┴───┴───┼───────┼──────┼──────┼─────────┼────────┤   ├────────┼─────┼──────┼──────┼──────┼───┴───┴──────────┘
+//                         │ mply  │ lgui │ lalt │   spc   │  NAVI  │   │  NAVI  │ ret │ ralt │ rgui │ ralt │
+//                         └───────┴──────┴──────┴─────────┴────────┘   └────────┴─────┴──────┴──────┴──────┘
+  &tl_tabtild PROG 0   &kp Q   &kp W   &kp E      &kp R      &kp T                                                                     &kp Y      &kp U      &kp I       &kp O     &kp P      &tl_bslhmin PROG 0
+  &tk LCTRL ESC        &kp A   &kp S   &ddel      &kp F      &kp G                                                                     &hbs       &kp J      &kp K       &kp L     &kp SEMI   &tk RCTRL SQT
+  &tk LSHFT LPAR       &kp Z   &kp X   &kp C      &kp V      &kp B      &tl SPEC LBKT   &tl ZMK GRAVE       &tl ZMK MINUS   &kp RBKT   &kp N      &kp M      &kp COMMA   &kp DOT   &kp FSLH   &tk RSHFT RPAR
+                                       &kp K_PP   &kp LGUI   &kp LALT   &kp SPACE       &mo NAVI            &mo NAVI        &kp RET    &kp RALT   &kp RGUI   &kp RALT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
@@ -276,6 +291,24 @@
                                    &trans    &trans    &trans        &trans   &trans       &trans   &trans   &trans      &trans     &trans
             >;
 
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
+        };
+        SPEC {
+            bindings = <
+//    ┌────┬────┬────┬────┬────┬────┐                       ┌────┬────────┬────────┬────────┬────────┬────┐
+//    │    │    │    │    │    │    │                       │    │        │        │        │        │    │
+//    ├────┼────┼────┼────┼────┼────┤                       ├────┼────────┼────────┼────────┼────────┼────┤
+//    │    │    │    │    │    │    │                       │    │ &vt F1 │ &vt F2 │ &vt F3 │ &vt F4 │    │
+//    ├────┼────┼────┼────┼────┼────┼────┬────┐   ┌────┬────┼────┼────────┼────────┼────────┼────────┼────┤
+//    │    │    │    │    │    │    │    │    │   │    │    │    │        │        │        │        │    │
+//    └────┴────┴────┼────┼────┼────┼────┼────┤   ├────┼────┼────┼────────┼────────┼────────┴────────┴────┘
+//                   │    │    │    │    │    │   │    │    │    │        │        │
+//                   └────┴────┴────┴────┴────┘   └────┴────┴────┴────────┴────────┘
+  &trans   &trans   &trans   &trans   &trans   &trans                                           &trans   &trans   &trans   &trans   &trans   &trans
+  &trans   &trans   &trans   &trans   &trans   &trans                                           &trans   &vt F1   &vt F2   &vt F3   &vt F4   &trans
+  &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+                             &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans
+            >;
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
         ZMK {
