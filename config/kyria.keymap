@@ -179,13 +179,13 @@
         tapping-term-ms = <250>;
         bindings = <&mo>, <&tabtild>;
       };
-      tl_bslhmin: tap_back_slash_minus {
+      tl_bslhund: tap_back_slash_minus {
         compatible = "zmk,behavior-hold-tap";
         label = "TAP_BACK_SLASH_MINUS";
         #binding-cells = <2>;
         flavor = "hold-preferred";
         tapping-term-ms = <250>;
-        bindings = <&mo>, <&bslhmin>;
+        bindings = <&mo>, <&bslhund>;
       };
       tl: tap_layer {
         compatible = "zmk,behavior-hold-tap";
@@ -217,11 +217,11 @@
         bindings = <&kp TAB>, <&kp TILDE>;
         mods = <(MOD_LCTL)>;
       };
-      bslhmin: back_slash_minus {
+      bslhund: back_slash_under {
         compatible = "zmk,behavior-mod-morph";
         label = "BACK_SLASH_MINUS";
         #binding-cells = <0>;
-        bindings = <&kp BSLH>, <&kp MINUS>;
+        bindings = <&kp BSLH>, <&kp UNDER>;
         mods = <(MOD_RCTL)>;
       };
       ddel: d_delete {
@@ -239,7 +239,7 @@
         BASE {
             bindings = <
 //    ┌────────────┬───┬───┬───────┬──────┬──────┐                                    ┌──────┬──────┬──────┬───┬───┬──────────┐
-//    │ PROG tab ~ │ Q │ W │   E   │  R   │  T   │                                    │  Y   │  U   │  I   │ O │ P │ PROG \ - │
+//    │ PROG tab ~ │ Q │ W │   E   │  R   │  T   │                                    │  Y   │  U   │  I   │ O │ P │ PROG \ _ │
 //    ├────────────┼───┼───┼───────┼──────┼──────┤                                    ├──────┼──────┼──────┼───┼───┼──────────┤
 //    │  lctrl esc │ A │ S │ d/del │  F   │  G   │                                    │ h/bs │  J   │  K   │ L │ ; │  rctrl ' │
 //    ├────────────┼───┼───┼───────┼──────┼──────┼────────┬────────┐   ┌────────┬─────┼──────┼──────┼──────┼───┼───┼──────────┤
@@ -247,7 +247,7 @@
 //    └────────────┴───┴───┼───────┼──────┼──────┼────────┼────────┤   ├────────┼─────┼──────┼──────┼──────┼───┴───┴──────────┘
 //                         │ mply  │ lgui │ lalt │  spc   │  NAVI  │   │  NAVI  │ ret │ ralt │ rgui │ ralt │
 //                         └───────┴──────┴──────┴────────┴────────┘   └────────┴─────┴──────┴──────┴──────┘
-  &tl_tabtild PROG 0   &kp Q   &kp W   &kp E      &kp R      &kp T                                                                    &kp Y      &kp U      &kp I       &kp O     &kp P      &tl_bslhmin PROG 0
+  &tl_tabtild PROG 0   &kp Q   &kp W   &kp E      &kp R      &kp T                                                                    &kp Y      &kp U      &kp I       &kp O     &kp P      &tl_bslhund PROG 0
   &tk LCTRL ESC        &kp A   &kp S   &ddel      &kp F      &kp G                                                                    &hbs       &kp J      &kp K       &kp L     &kp SEMI   &tk RCTRL SQT
   &tk LSHFT LPAR       &kp Z   &kp X   &kp C      &kp V      &kp B      &tl SYS LBKT   &tl ZMK GRAVE       &tl ZMK MINUS   &kp RBKT   &kp N      &kp M      &kp COMMA   &kp DOT   &kp FSLH   &tk RSHFT RPAR
                                        &kp K_PP   &kp LGUI   &kp LALT   &kp SPACE      &mo NAVI            &mo NAVI        &kp RET    &kp RALT   &kp RGUI   &kp RALT
