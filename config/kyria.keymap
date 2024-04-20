@@ -300,13 +300,13 @@
 //    ├────┼────┼────┼────┼────┼────┤                       ├────┼────────┼────────┼────────┼────────┼────┤
 //    │    │    │    │    │    │    │                       │    │ &vt F1 │ &vt F2 │ &vt F3 │ &vt F4 │    │
 //    ├────┼────┼────┼────┼────┼────┼────┬────┐   ┌────┬────┼────┼────────┼────────┼────────┼────────┼────┤
-//    │    │    │    │    │    │    │    │    │   │    │    │    │        │        │        │        │    │
+//    │    │    │    │    │    │    │    │    │   │    │ [] │    │        │        │        │        │    │
 //    └────┴────┴────┼────┼────┼────┼────┼────┤   ├────┼────┼────┼────────┼────────┼────────┴────────┴────┘
 //                   │    │    │    │    │    │   │    │    │    │        │        │
 //                   └────┴────┴────┴────┴────┘   └────┴────┴────┴────────┴────────┘
   &trans   &trans   &trans   &trans   &trans   &trans                                           &trans   &trans   &trans   &trans   &trans   &trans
   &trans   &trans   &trans   &trans   &trans   &trans                                           &trans   &vt F1   &vt F2   &vt F3   &vt F4   &trans
-  &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+  &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans       &trans   &lrbkt   &trans   &trans   &trans   &trans   &trans   &trans
                              &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
