@@ -6,27 +6,27 @@ build_kyria: build_kyria_left .WAIT build_kyria_right
 
 build_kyria_left:
 	@mkdir -p ./build/artifacts
-	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_left nice_view_adapter nice_view" && \
+	python west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_left nice_view_adapter nice_view" && \
 	cp build/zephyr/zmk.uf2 kyria_left-nice_nano_v2-zmk.uf2
 
 build_kyria_right:
 	@mkdir -p ./build/artifacts
-	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_right nice_view_adapter nice_view" && \
+	python west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_right nice_view_adapter nice_view" && \
 	cp build/zephyr/zmk.uf2 kyria_right-nice_nano_v2-zmk.uf2
 
 build_kyria_settings_reset:
 	@mkdir -p ./build/artifacts
-	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" && \
+	python west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" && \
 	cp build/zephyr/zmk.uf2 kyria_settings_reset-nice_nano_v2-zmk.uf2
 
 build_dactyl_gaming:
 	@mkdir -p ./build/artifacts
-	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="dactyl_gaming" -DZMK_EXTRA_MODULES="${PWD}/shields/dactyl_gaming" && \
+	python west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="dactyl_gaming" -DZMK_EXTRA_MODULES="${PWD}/shields/dactyl_gaming" && \
 	cp build/zephyr/zmk.uf2 dactyl_gaming-nice_nano_v2-zmk.uf2
 
 build_dactyl_gaming_settings_reset:
 	@mkdir -p ./build/artifacts
-	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" -DZMK_EXTRA_MODULES="${PWD}/shields/dactyl_gaming" && \
+	python west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" -DZMK_EXTRA_MODULES="${PWD}/shields/dactyl_gaming" && \
 	cp build/zephyr/zmk.uf2 dactyl_gaming_settings_reset-nice_nano_v2-zmk.uf2
 
 copy_kyria: copy_kyria_left .WAIT copy_kyria_right
@@ -63,8 +63,11 @@ copy_dactyl_gaming_settings_reset:
 
 update:
 	git -C "${PWD}/zmk" apply -R < "${PWD}/patch/nice_view_battery_percentage.patch"
-	west update
+	python west update
 	git -C "${PWD}/zmk" apply < "${PWD}/patch/nice_view_battery_percentage.patch"
+
+pip_install:
+	pip install -r requirements.txt
 
 flash_kyria: build_kyria_left .WAIT build_kyria_right .WAIT copy_kyria_left .WAIT copy_kyria_right
 flash_kyria_left: build_kyria_left .WAIT copy_kyria_left
