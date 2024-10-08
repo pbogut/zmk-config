@@ -13,9 +13,11 @@
 #define BASE 0
 #define WIN 1
 #define RPG 2
-#define L1 3
-#define L2 4
-#define L1_WIN 5
+/* Excalidraw */
+#define EXCD 3
+#define L1 4
+#define L2 5
+#define L1_WIN 6
 
 #define KILL    LG(LS(Q))
 #define SCR_PIC LC(PSCRN)
@@ -24,6 +26,8 @@
 #define SCR_PIC_WIN LS(LC(I))
 #define SCR_VID_WIN LA(S)
 #define MAP LA(M)
+#define ZOOM_IN LC(EQUAL)
+#define ZOOM_OUT LC(MINUS)
 
 &caps_word {
     continue-list = <UNDERSCORE MINUS>;
@@ -135,6 +139,35 @@
                                             &trans      &trans
             >;
         };
+        EXCD {
+            bindings = <
+//    ┌─────┬───────┬──────────┬─────────┬─────┬─────┐
+//    │ esc │   H   │    1     │    2    │  3  │  4  │
+//    ├─────┼───────┼──────────┼─────────┼─────┼─────┤
+//    │     │  tab  │    5     │    6    │  7  │  8  │
+//    ├─────┼───────┼──────────┼─────────┼─────┼─────┤
+//    │  K  │ lshft │    9     │    0    │     │ del │
+//    ├─────┼───────┼──────────┼─────────┼─────┼─────┤
+//    │  F  │ lctrl │    Z     │    C    │  V  │  D  │
+//    └─────┴───────┼──────────┼─────────┼─────┴─────┘
+//                  │ ZOOM_out │ ZOOM_IN │
+//                  └──────────┴─────────┼─────┬─────┐
+//                                       │     │     │
+//                                       ├─────┼─────┤
+//                                       │     │     │
+//                                       ├─────┼─────┤
+//                                       │ L1  │ L2  │
+//                                       └─────┴─────┘
+  &kp ESC   &kp H       &kp N1         &kp N2        &kp N3   &kp N4
+  &none     &kp TAB     &kp N5         &kp N6        &kp N7   &kp N8
+  &kp K     &kp LSHFT   &kp N9         &kp N0        &none    &kp DEL
+  &kp F     &kp LCTRL   &kp Z          &kp C         &kp V    &kp D
+                        &kp ZOOM_OUT   &kp ZOOM_IN
+                                                     &none    &none
+                                                     &none    &none
+                                                     &mo L1   &mo L2
+            >;
+        };
         L1 {
             bindings = <
 //    ┌─────────┬──────┬────┬────┬────┬─────────┐
@@ -144,7 +177,7 @@
 //    ├─────────┼──────┼────┼────┼────┼─────────┤
 //    │ SCR_VID │  up  │ 4  │ 5  │ 6  │ to RPG  │
 //    ├─────────┼──────┼────┼────┼────┼─────────┤
-//    │ STM_OVR │ down │ 1  │ 2  │ 3  │         │
+//    │ STM_OVR │ down │ 1  │ 2  │ 3  │ to EXCD │
 //    └─────────┴──────┼────┼────┼────┴─────────┘
 //                     │ 0  │    │
 //                     └────┴────┼────┬─────────┐
@@ -157,7 +190,7 @@
   &kp GRAVE     &trans      &trans   &trans   &trans   &to BASE
   &kp SCR_PIC   &kp ENTER   &kp N7   &kp N8   &kp N9   &to WIN
   &kp SCR_VID   &kp UP      &kp N4   &kp N5   &kp N6   &to RPG
-  &kp STM_OVR   &kp DOWN    &kp N1   &kp N2   &kp N3   &trans
+  &kp STM_OVR   &kp DOWN    &kp N1   &kp N2   &kp N3   &to EXCD
                             &kp N0   &trans
                                               &trans   &trans
                                               &trans   &trans
