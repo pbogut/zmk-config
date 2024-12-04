@@ -13,8 +13,7 @@
 #define BASE 0
 #define PROG 1
 #define NAVI 2
-#define SYS  3
-#define ZMK  4
+#define ZMK  3
 
 #define KILL    LG(LS(Q))
 #define PSCR_SC LS(PSCRN)
@@ -250,19 +249,19 @@
 
         BASE {
             bindings = <
-//    ┌────────────┬───┬───┬───────┬──────┬──────┐                                    ┌──────┬──────┬──────┬───┬───┬──────────┐
-//    │ PROG tab ~ │ Q │ W │   E   │  R   │  T   │                                    │  Y   │  U   │  I   │ O │ P │ PROG \ _ │
-//    ├────────────┼───┼───┼───────┼──────┼──────┤                                    ├──────┼──────┼──────┼───┼───┼──────────┤
-//    │  lctrl esc │ A │ S │ d/del │  F   │  G   │                                    │ h/bs │  J   │  K   │ L │ ; │  rctrl ' │
-//    ├────────────┼───┼───┼───────┼──────┼──────┼────────┬────────┐   ┌────────┬─────┼──────┼──────┼──────┼───┼───┼──────────┤
-//    │   lshft (  │ Z │ X │   C   │  V   │  B   │  SYS [ │  ZMK ` │   │  ZMK - │  ]  │  N   │  M   │  ,   │ . │ / │  rshft ) │
-//    └────────────┴───┴───┼───────┼──────┼──────┼────────┼────────┤   ├────────┼─────┼──────┼──────┼──────┼───┴───┴──────────┘
-//                         │ mply  │ lgui │ lalt │  spc   │  NAVI  │   │  NAVI  │ ret │ ralt │ rgui │ next │
-//                         └───────┴──────┴──────┴────────┴────────┘   └────────┴─────┴──────┴──────┴──────┘
-  &tl_tabtild PROG 0   &kp Q   &kp W   &kp E      &kp R      &kp T                                                                    &kp Y      &kp U      &kp I        &kp O     &kp P      &tl_bslhund PROG 0
-  &tk LCTRL ESC        &kp A   &kp S   &ddel      &kp F      &kp G                                                                    &hbs       &kp J      &kp K        &kp L     &kp SEMI   &tk RCTRL SQT
-  &tk LSHFT LPAR       &kp Z   &kp X   &kp C      &kp V      &kp B      &tl SYS LBKT   &tl ZMK GRAVE       &tl ZMK MINUS   &kp RBKT   &kp N      &kp M      &kp COMMA    &kp DOT   &kp FSLH   &tk RSHFT RPAR
-                                       &kp K_PP   &kp LGUI   &kp LALT   &kp SPACE      &mo NAVI            &mo NAVI        &kp RET    &kp RALT   &kp RGUI   &kp K_NEXT
+//    ┌────────────┬───┬───┬───────┬──────┬──────┐                                 ┌──────┬──────┬──────┬───┬───┬──────────┐
+//    │ PROG tab ~ │ Q │ W │   E   │  R   │  T   │                                 │  Y   │  U   │  I   │ O │ P │ PROG \ _ │
+//    ├────────────┼───┼───┼───────┼──────┼──────┤                                 ├──────┼──────┼──────┼───┼───┼──────────┤
+//    │  lctrl esc │ A │ S │ d/del │  F   │  G   │                                 │ h/bs │  J   │  K   │ L │ ; │  rctrl ' │
+//    ├────────────┼───┼───┼───────┼──────┼──────┼─────┬────────┐   ┌────────┬─────┼──────┼──────┼──────┼───┼───┼──────────┤
+//    │   lshft (  │ Z │ X │   C   │  V   │  B   │  [  │  ZMK ` │   │  ZMK - │  ]  │  N   │  M   │  ,   │ . │ / │  rshft ) │
+//    └────────────┴───┴───┼───────┼──────┼──────┼─────┼────────┤   ├────────┼─────┼──────┼──────┼──────┼───┴───┴──────────┘
+//                         │ mply  │ lgui │ lalt │ spc │  NAVI  │   │  NAVI  │ ret │ ralt │ rgui │ next │
+//                         └───────┴──────┴──────┴─────┴────────┘   └────────┴─────┴──────┴──────┴──────┘
+  &tl_tabtild PROG 0   &kp Q   &kp W   &kp E      &kp R      &kp T                                                                 &kp Y      &kp U      &kp I        &kp O     &kp P      &tl_bslhund PROG 0
+  &tk LCTRL ESC        &kp A   &kp S   &ddel      &kp F      &kp G                                                                 &hbs       &kp J      &kp K        &kp L     &kp SEMI   &tk RCTRL SQT
+  &tk LSHFT LPAR       &kp Z   &kp X   &kp C      &kp V      &kp B      &kp LBKT    &tl ZMK GRAVE       &tl ZMK MINUS   &kp RBKT   &kp N      &kp M      &kp COMMA    &kp DOT   &kp FSLH   &tk RSHFT RPAR
+                                       &kp K_PP   &kp LGUI   &kp LALT   &kp SPACE   &mo NAVI            &mo NAVI        &kp RET    &kp RALT   &kp RGUI   &kp K_NEXT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
@@ -288,55 +287,37 @@
         };
         NAVI {
             bindings = <
-//    ┌─────────┬────┬─────┬─────┬─────┬─────────┐                       ┌──────┬──────┬───────┬───────┬──────┬────┐
-//    │ PSCR_SC │ f1 │ f2  │ f3  │ f4  │  KILL   │                       │ home │ end  │  prv  │  nxt  │ pgup │    │
-//    ├─────────┼────┼─────┼─────┼─────┼─────────┤                       ├──────┼──────┼───────┼───────┼──────┼────┤
-//    │         │ f5 │ f6  │ f7  │ f8  │  pscr   │                       │ left │ down │  up   │ right │      │    │
-//    ├─────────┼────┼─────┼─────┼─────┼─────────┼────┬────┐   ┌────┬────┼──────┼──────┼───────┼───────┼──────┼────┤
-//    │         │ f9 │ f10 │ f11 │ f12 │ PSCR_RT │    │    │   │    │    │ pgdn │ lalt │ lctrl │  del  │      │    │
-//    └─────────┴────┴─────┼─────┼─────┼─────────┼────┼────┤   ├────┼────┼──────┼──────┼───────┼───────┴──────┴────┘
-//                         │     │     │         │    │    │   │    │    │      │      │       │
-//                         └─────┴─────┴─────────┴────┴────┘   └────┴────┴──────┴──────┴───────┘
-  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL                                              &kp HOME    &kp END    &bt BT_PRV   &bt BT_NXT   &kp PG_UP   &trans
-  &trans        &kp F5   &kp F6    &kp F7    &kp F8    &kp PSCRN                                             &kp LEFT    &kp DOWN   &kp UP       &kp RIGHT    &trans      &trans
-  &trans        &kp F9   &kp F10   &kp F11   &kp F12   &kp PSCR_RT   &trans   &trans       &trans   &trans   &kp PG_DN   &kp LALT   &kp LCTRL    &kp DEL      &trans      &trans
-                                   &trans    &trans    &trans        &trans   &trans       &trans   &trans   &trans      &trans     &trans
+//    ┌─────────┬────┬─────┬─────┬─────┬─────────┐                       ┌─────────┬───────┬───────┬───────┬──────┬────┐
+//    │ PSCR_SC │ f1 │ f2  │ f3  │ f4  │  KILL   │                       │ tog TAL │  end  │  prv  │  nxt  │ pgup │    │
+//    ├─────────┼────┼─────┼─────┼─────┼─────────┤                       ├─────────┼───────┼───────┼───────┼──────┼────┤
+//    │         │ f5 │ f6  │ f7  │ f8  │  pscr   │                       │  left   │ down  │  up   │ right │      │    │
+//    ├─────────┼────┼─────┼─────┼─────┼─────────┼────┬────┐   ┌────┬────┼─────────┼───────┼───────┼───────┼──────┼────┤
+//    │         │ f9 │ f10 │ f11 │ f12 │ PSCR_RT │    │    │   │    │    │  pgdn   │ bt> 0 │ bt> 4 │ bt> 1 │      │    │
+//    └─────────┴────┴─────┼─────┼─────┼─────────┼────┼────┤   ├────┼────┼─────────┼───────┼───────┼───────┴──────┴────┘
+//                         │     │     │         │    │    │   │    │    │         │       │       │
+//                         └─────┴─────┴─────────┴────┴────┘   └────┴────┴─────────┴───────┴───────┘
+  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL                                              &tog TAL    &kp END        &bt BT_PRV     &bt BT_NXT     &kp PG_UP   &trans
+  &trans        &kp F5   &kp F6    &kp F7    &kp F8    &kp PSCRN                                             &kp LEFT    &kp DOWN       &kp UP         &kp RIGHT      &trans      &trans
+  &trans        &kp F9   &kp F10   &kp F11   &kp F12   &kp PSCR_RT   &trans   &trans       &trans   &trans   &kp PG_DN   &bt BT_SEL 0   &bt BT_SEL 4   &bt BT_SEL 1   &trans      &trans
+                                   &trans    &trans    &trans        &trans   &trans       &trans   &trans   &trans      &trans         &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
-        SYS {
-            bindings = <
-//    ┌────┬────┬────┬────┬────┬────┐                       ┌────┬─────┬─────┬─────┬─────┬────┐
-//    │    │    │    │    │    │    │                       │    │     │     │     │     │    │
-//    ├────┼────┼────┼────┼────┼────┤                       ├────┼─────┼─────┼─────┼─────┼────┤
-//    │    │    │    │    │    │    │                       │    │ VT1 │ VT2 │ VT3 │ VT4 │    │
-//    ├────┼────┼────┼────┼────┼────┼────┬────┐   ┌────┬────┼────┼─────┼─────┼─────┼─────┼────┤
-//    │    │    │    │    │    │    │    │    │   │    │ [] │    │     │     │     │     │    │
-//    └────┴────┴────┼────┼────┼────┼────┼────┤   ├────┼────┼────┼─────┼─────┼─────┴─────┴────┘
-//                   │    │    │    │    │    │   │    │    │    │     │     │
-//                   └────┴────┴────┴────┴────┘   └────┴────┴────┴─────┴─────┘
-  &trans   &trans   &trans   &trans   &trans   &trans                                           &trans   &trans   &trans   &trans   &trans   &trans
-  &trans   &trans   &trans   &trans   &trans   &trans                                           &trans   &vt F1   &vt F2   &vt F3   &vt F4   &trans
-  &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans       &trans   &lrbkt   &trans   &trans   &trans   &trans   &trans   &trans
-                             &trans   &trans   &trans   &trans   &trans       &trans   &trans   &trans   &trans   &trans
-            >;
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
-        };
         ZMK {
             bindings = <
-//    ┌────┬───────┬───────┬───────┬───────┬───────┐                       ┌───────┬─────────┬─────────┬─────────┬────┬────┐
-//    │    │ bt> 0 │ bt> 1 │ bt> 2 │ bt> 3 │       │                       │       │ ep TOG  │  ep ON  │ ep OFF  │    │    │
-//    ├────┼───────┼───────┼───────┼───────┼───────┤                       ├───────┼─────────┼─────────┼─────────┼────┼────┤
-//    │    │ bt> 4 │       │       │  clr  │ rsftT │                       │ rsftT │ out TOG │ out USB │ out BLE │    │    │
-//    ├────┼───────┼───────┼───────┼───────┼───────┼────┬────┐   ┌────┬────┼───────┼─────────┼─────────┼─────────┼────┼────┤
-//    │    │       │       │  prv  │  nxt  │ BOOT  │    │    │   │    │    │ BOOT  │         │         │         │    │    │
-//    └────┴───────┴───────┼───────┼───────┼───────┼────┼────┤   ├────┼────┼───────┼─────────┼─────────┼─────────┴────┴────┘
+//    ┌────┬───────┬───────┬───────┬───────┬───────┐                       ┌───────┬─────────┬─────────┬─────────┬─────┬────┐
+//    │    │ bt> 0 │ bt> 1 │ bt> 2 │ bt> 3 │       │                       │       │ ep TOG  │  ep ON  │ ep OFF  │     │    │
+//    ├────┼───────┼───────┼───────┼───────┼───────┤                       ├───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │ bt> 4 │       │       │  clr  │ rsftT │                       │ rsftT │   VT1   │   VT2   │   VT3   │ VT4 │    │
+//    ├────┼───────┼───────┼───────┼───────┼───────┼────┬────┐   ┌────┬────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │       │       │  prv  │  nxt  │ BOOT  │    │    │   │    │    │ BOOT  │ out TOG │ out USB │ out BLE │     │    │
+//    └────┴───────┴───────┼───────┼───────┼───────┼────┼────┤   ├────┼────┼───────┼─────────┼─────────┼─────────┴─────┴────┘
 //                         │       │       │       │    │    │   │    │    │       │         │         │
 //                         └───────┴───────┴───────┴────┴────┘   └────┴────┴───────┴─────────┴─────────┘
   &trans   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &trans                                                &trans        &ext_power EP_TOG   &ext_power EP_ON   &ext_power EP_OFF   &trans   &trans
-  &trans   &bt BT_SEL 4   &trans         &trans         &bt BT_CLR     &sys_reset                                            &sys_reset    &out OUT_TOG        &out OUT_USB       &out OUT_BLE        &trans   &trans
-  &trans   &trans         &trans         &bt BT_PRV     &bt BT_NXT     &bootloader   &trans   &trans       &trans   &trans   &bootloader   &trans              &trans             &trans              &trans   &trans
+  &trans   &bt BT_SEL 4   &trans         &trans         &bt BT_CLR     &sys_reset                                            &sys_reset    &vt F1              &vt F2             &vt F3              &vt F4   &trans
+  &trans   &trans         &trans         &bt BT_PRV     &bt BT_NXT     &bootloader   &trans   &trans       &trans   &trans   &bootloader   &out OUT_TOG        &out OUT_USB       &out OUT_BLE        &trans   &trans
                                          &trans         &trans         &trans        &trans   &trans       &trans   &trans   &trans        &trans              &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
