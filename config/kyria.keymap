@@ -53,25 +53,21 @@
                      ;
         };
         lrpars: left_right_parens {
-            label = "LEFT_RIGHT_PARENS";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp LPAR &kp RPAR>;
         };
         lrbrc: left_right_braces {
-            label = "LEFT_RIGHT_BRACES";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp LBRC &kp RBRC>;
         };
         lrbkt: left_right_brackets {
-            label = "LEFT_RIGHT_BRACKETS";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp LBKT &kp RBKT>;
         };
         tildslh: tilde_forward_slash {
-            label = "TILDE_FORWARD_SLASH";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -82,34 +78,65 @@
                 ;
         };
         notequal: notequal {
-            label = "NOT_EQUAL";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp EXCL &kp EQUAL>;
         };
-        arrow: arrow {
-            label = "ARROW";
+        arrowgt: arrow_gt {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp MINUS &kp GT>;
         };
+        arrowlt: arrow_lt {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LT &kp MINUS>;
+        };
+        coleql: colon_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp COLON &kp EQUAL>;
+        };
         fatarrow: fat_arrow {
-            label = "FAT_ARROW";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp EQUAL &kp GT>;
         };
         ltpipe: lt_pipe {
-            label = "LT_PIPE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp LT &kp PIPE>;
         };
         pipegt: pipe_gt {
-            label = "PIPE_GT";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp PIPE &kp GT>;
+        };
+        to_kp: to_layer_press_kp {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            bindings = <&macro_param_1to1>
+                     , <&to MACRO_PLACEHOLDER>
+                     , <&macro_param_2to1>
+                     , <&kp MACRO_PLACEHOLDER>
+                     ;
+        };
+        to_bt: to_layer_switch_bt {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            bindings = <&macro_param_1to1>
+                     , <&to MACRO_PLACEHOLDER>
+                     , <&macro_param_2to2>
+                     , <&bt BT_SEL MACRO_PLACEHOLDER>
+                     ;
+        };
+        tb_bt: to_base_bt {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&to BASE>
+                     , <&macro_param_1to2>
+                     , <&bt BT_SEL MACRO_PLACEHOLDER>
+                     ;
         };
     };
 
@@ -137,10 +164,22 @@
             bindings = <&notequal>;
         };
         // r. for `->`
-        combo_arrow {
+        combo_arrow_gt {
             timeout-ms = <50>;
             key-positions = <4 37>;
-            bindings = <&arrow>;
+            bindings = <&arrowgt>;
+        };
+        // r, for `<-`
+        combo_arrow_lt {
+            timeout-ms = <50>;
+            key-positions = <4 36>;
+            bindings = <&arrowlt>;
+        };
+        // e; for `:=`
+        combo_colon_equal {
+            timeout-ms = <50>;
+            key-positions = <3 22>;
+            bindings = <&coleql>;
         };
         // e. for `=>`
         combo_fat_arrow {
@@ -179,12 +218,26 @@
             layers = <PROG>;
             bindings = <&lrbrc>;
         };
+        combo_tal_win {
+            timeout-ms = <150>;
+            key-positions = <0 5>;
+            bindings = <&to_bt TAL BT_WIN>;
+        };
+        combo_tal_lin {
+            timeout-ms = <150>;
+            key-positions = <0 4>;
+            bindings = <&to_bt TAL BT_LIN>;
+        };
+        combo_base {
+            timeout-ms = <150>;
+            key-positions = <0 17>;
+            bindings = <&to BASE>;
+        };
     };
 
     behaviors {
       tl_tabtild: tap_layer_tab_tilde {
         compatible = "zmk,behavior-hold-tap";
-        label = "TAP_LAYER_TAB_TILDE";
         #binding-cells = <2>;
         flavor = "hold-preferred";
         tapping-term-ms = <250>;
@@ -192,7 +245,6 @@
       };
       tl_bslhund: tap_back_slash_minus {
         compatible = "zmk,behavior-hold-tap";
-        label = "TAP_BACK_SLASH_MINUS";
         #binding-cells = <2>;
         flavor = "hold-preferred";
         tapping-term-ms = <250>;
@@ -200,7 +252,6 @@
       };
       tl: tap_layer {
         compatible = "zmk,behavior-hold-tap";
-        label = "TAP_LAYER";
         #binding-cells = <2>;
         flavor = "hold-preferred";
         tapping-term-ms = <250>;
@@ -208,7 +259,6 @@
       };
       tk: tap_key {
         compatible = "zmk,behavior-hold-tap";
-        label = "TAP_KEY";
         #binding-cells = <2>;
         flavor = "hold-preferred";
         tapping-term-ms = <250>;
@@ -216,28 +266,24 @@
       };
       hbs: h_backspace {
         compatible = "zmk,behavior-mod-morph";
-        label = "H_BACKSPACE";
         #binding-cells = <0>;
         bindings = <&kp H>, <&kp BSPC>;
         mods = <(MOD_LCTL)>;
       };
       tabtild: tab_tilde {
         compatible = "zmk,behavior-mod-morph";
-        label = "TAB_TILDE";
         #binding-cells = <0>;
         bindings = <&kp TAB>, <&kp TILDE>;
         mods = <(MOD_LCTL)>;
       };
       bslhund: back_slash_under {
         compatible = "zmk,behavior-mod-morph";
-        label = "BACK_SLASH_MINUS";
         #binding-cells = <0>;
         bindings = <&kp BSLH>, <&kp UNDER>;
         mods = <(MOD_RCTL)>;
       };
       ddel: d_delete {
         compatible = "zmk,behavior-mod-morph";
-        label = "D_DELETE";
         #binding-cells = <0>;
         bindings = <&kp D>, <&kp DEL>;
         mods = <(MOD_RCTL)>;
