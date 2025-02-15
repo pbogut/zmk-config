@@ -14,6 +14,13 @@
 #define PROG 1
 #define NAVI 2
 #define ZMK  3
+#define TAL  4
+#define TAL2  5
+#define TAL3  6
+
+#define BT_LIN 0
+#define BT_LAP 1
+#define BT_WIN 4
 
 #define KILL    LG(LS(Q))
 #define PSCR_SC LS(PSCRN)
@@ -365,6 +372,60 @@
   &trans   &bt BT_SEL 4   &trans         &trans         &bt BT_CLR     &sys_reset                                            &sys_reset    &vt F1              &vt F2             &vt F3              &vt F4   &trans
   &trans   &trans         &trans         &bt BT_PRV     &bt BT_NXT     &bootloader   &trans   &trans       &trans   &trans   &bootloader   &out OUT_TOG        &out OUT_USB       &out OUT_BLE        &trans   &trans
                                          &trans         &trans         &trans        &trans   &trans       &trans   &trans   &trans        &trans              &trans
+            >;
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
+        };
+        TAL {
+            bindings = <
+//    ┌──────┬──────┬────┬────┬───────────┬───┐                                  ┌────┬────┬────┬────┬────┬────┐
+//    │  M   │ tab  │ 1  │ 2  │     3     │ R │                                  │    │    │    │    │    │    │
+//    ├──────┼──────┼────┼────┼───────────┼───┤                                  ├────┼────┼────┼────┼────┼────┤
+//    │ lalt │ TAL2 │ 4  │ 5  │     6     │ F │                                  │    │    │    │    │    │    │
+//    ├──────┼──────┼────┼────┼───────────┼───┼───────┬──────┐   ┌────┬──────────┼────┼────┼────┼────┼────┼────┤
+//    │      │      │    │ C  │   lshft   │ B │ lctrl │      │   │    │          │    │    │    │    │    │    │
+//    └──────┴──────┴────┼────┼───────────┼───┼───────┼──────┤   ├────┼──────────┼────┼────┼────┼────┴────┴────┘
+//                       │    │ BASE lgui │ Q │  spc  │ TAL3 │   │    │ BASE ent │    │    │    │
+//                       └────┴───────────┴───┴───────┴──────┘   └────┴──────────┴────┴────┴────┘
+  &kp M      &kp TAB    &kp N1   &kp N2   &kp N3             &kp R                                                           &trans   &trans   &trans   &trans   &trans   &trans
+  &kp LALT   &mo TAL2   &kp N4   &kp N5   &kp N6             &kp F                                                           &trans   &trans   &trans   &trans   &trans   &trans
+  &trans     &trans     &trans   &kp C    &kp LSHFT          &kp B   &kp LCTRL   &trans         &trans   &trans              &trans   &trans   &trans   &trans   &trans   &trans
+                                 &trans   &to_kp BASE LGUI   &kp Q   &kp SPACE   &mo TAL3       &trans   &to_kp BASE ENTER   &trans   &trans   &trans
+            >;
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
+        };
+        TAL2 {
+            bindings = <
+//    ┌────┬────┬────┬────┬───────────┬──────┐                                ┌────┬────┬────┬────┬────┬────┐
+//    │    │    │ 7  │ 8  │     9     │ pgup │                                │    │    │    │    │    │    │
+//    ├────┼────┼────┼────┼───────────┼──────┤                                ├────┼────┼────┼────┼────┼────┤
+//    │    │    │ 0  │ -  │     =     │ pgdn │                                │    │    │    │    │    │    │
+//    ├────┼────┼────┼────┼───────────┼──────┼─────┬──────┐   ┌────┬──────────┼────┼────┼────┼────┼────┼────┤
+//    │    │    │    │    │           │      │     │      │   │    │          │    │    │    │    │    │    │
+//    └────┴────┴────┼────┼───────────┼──────┼─────┼──────┤   ├────┼──────────┼────┼────┼────┼────┴────┴────┘
+//                   │    │ BASE lgui │  Q   │ spc │ lalt │   │    │ BASE ent │    │    │    │
+//                   └────┴───────────┴──────┴─────┴──────┘   └────┴──────────┴────┴────┴────┘
+  &trans   &trans   &kp N7   &kp N8      &kp N9             &kp PG_UP                                                           &trans   &trans   &trans   &trans   &trans   &trans
+  &trans   &trans   &kp N0   &kp MINUS   &kp EQUAL          &kp PG_DN                                                           &trans   &trans   &trans   &trans   &trans   &trans
+  &trans   &trans   &trans   &trans      &trans             &trans      &trans      &trans         &trans   &trans              &trans   &trans   &trans   &trans   &trans   &trans
+                             &trans      &to_kp BASE LGUI   &kp Q       &kp SPACE   &kp LALT       &trans   &to_kp BASE ENTER   &trans   &trans   &trans
+            >;
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
+        };
+        TAL3 {
+            bindings = <
+//    ┌────┬────┬─────────┬─────────┬───────────┬──────┐                               ┌─────────┬─────────┬─────────┬─────────┬─────────┬────┐
+//    │    │    │ lalt(4) │ lalt(5) │  lalt(6)  │ pgup │                               │         │ lctl(U) │ lctl(I) │ lctl(O) │ lctl(P) │    │
+//    ├────┼────┼─────────┼─────────┼───────────┼──────┤                               ├─────────┼─────────┼─────────┼─────────┼─────────┼────┤
+//    │    │    │ lalt(0) │ lalt(-) │  lalt(=)  │  f3  │                               │         │ lctl(J) │ lctl(K) │ lctl(L) │         │    │
+//    ├────┼────┼─────────┼─────────┼───────────┼──────┼─────┬──────┐   ┌────┬─────────┼─────────┼─────────┼─────────┼─────────┼─────────┼────┤
+//    │    │    │   f1    │   f2    │    f3     │  f4  │     │      │   │    │         │ lctl(N) │  B>lin  │  B>win  │  B>lap  │         │    │
+//    └────┴────┴─────────┼─────────┼───────────┼──────┼─────┼──────┤   ├────┼─────────┼─────────┼─────────┼─────────┼─────────┴─────────┴────┘
+//                        │         │ BASE lgui │  Q   │ spc │ lalt │   │    │ tog TAL │         │         │         │
+//                        └─────────┴───────────┴──────┴─────┴──────┘   └────┴─────────┴─────────┴─────────┴─────────┘
+  &trans   &trans   &kp LA(N4)   &kp LA(N5)      &kp LA(N6)         &kp PG_UP                                                  &trans      &kp LC(U)       &kp LC(I)       &kp LC(O)       &kp LC(P)   &trans
+  &trans   &trans   &kp LA(N0)   &kp LA(MINUS)   &kp LA(EQUAL)      &kp F3                                                     &trans      &kp LC(J)       &kp LC(K)       &kp LC(L)       &trans      &trans
+  &trans   &trans   &kp F1       &kp F2          &kp F3             &kp F4      &trans      &trans         &trans   &trans     &kp LC(N)   &tb_bt BT_LIN   &tb_bt BT_WIN   &tb_bt BT_LAP   &trans      &trans
+                                 &trans          &to_kp BASE LGUI   &kp Q       &kp SPACE   &kp LALT       &trans   &tog TAL   &trans      &trans          &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>;
         };
