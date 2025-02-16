@@ -61,7 +61,7 @@ index b4915ab7..a553836f 100644
      init_rect_dsc(&rect_white_dsc, LVGL_FOREGROUND);
  
 +#if IS_ENABLED(CONFIG_NICE_VIEW_BATTERY_SHOW_BIG_PERCENTAGE)
-+    char big_text[4] = {};
++    char big_text[5] = {};
 +    sprintf(big_text, "%i%%", state->battery);
 +    lv_draw_label_dsc_t big_label_dsc;
 +    init_label_dsc(&big_label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_26, LV_TEXT_ALIGN_CENTER);
@@ -69,7 +69,7 @@ index b4915ab7..a553836f 100644
 +#endif
 +
 +#if IS_ENABLED(CONFIG_NICE_VIEW_BATTERY_SHOW_PERCENTAGE)
-+    char text[4] = {};
++    char text[5] = {};
 +    sprintf(text, "%i%%", state->battery);
 +    lv_draw_label_dsc_t label_dsc;
 +    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &lv_font_montserrat_16, LV_TEXT_ALIGN_CENTER);
