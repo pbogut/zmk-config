@@ -1,0 +1,199 @@
+/*
+ * Copyright (c) 2021 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/outputs.h>
+#include "macros.dtsi"
+
+#define BASE 0
+#define PROG 1
+#define NAVI 2
+#define ZMK  3
+
+#define KILL    LG(LS(Q))
+#define PSCR_SC LS(PSCRN)
+#define PSCR_RT LG(PSCRN)
+
+//    ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
+//    │ 0  │ 1  │ 2  │ 3  │ 4  │ 5  │ 6  │ 7  │ 8  │ 9  │ 10 │ 11 │
+//    ├────┼────┼────┼────┼────┼────┤────┼────┼────┼────┼────┼────┤
+//    │ 12 │ 13 │ 14 │ 15 │ 16 │ 17 │ 18 │ 19 │ 20 │ 21 │ 22 │ 23 │
+//    ├────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼
+//    │ 24 │ 25 │ 26 │ 27 │ 28 │ 29 │ 30 │ 31 │ 32 │ 33 │ 34 │ 35 │
+//    ├────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼
+//    │ 36 │ 37 │ 38 │ 39 │ 40 │ 41 │ 42 │ 43 │ 44 │ 45 │ 46 │ 47 │
+//    ├────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼
+//    │ 48 │ 49 │ 50 │ 51 │ 52 │ 53 │ 54 │ 55 │ 56 │ 57 │ 58 │ 59 │
+//    └────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
+/ {
+    combos {
+        compatible = "zmk,combos";
+        // left and right parentheses `()`, when typing fast using left and right
+        // shifts. Makes it hard to type )( but who would want that?
+        combo_left_right_parens {
+            timeout-ms = <150>;
+            key-positions = <36 47>;
+            bindings = <&lrpars>;
+        };
+        // tilde and forward slash `~/` - normaly you would nieed to use grave
+        // combo with shift and then slash. We are skipping shift here
+        combo_tilde_slash {
+            timeout-ms = <250>;
+            slow-release;
+            key-positions = <12 24 46>;
+            bindings = <&tildslh>;
+        };
+        // q; for `!=`
+        combo_not_equal {
+            timeout-ms = <50>;
+            key-positions = <13 34>;
+            bindings = <&notequal>;
+        };
+        // r. for `->`
+        combo_arrow_gt {
+            timeout-ms = <50>;
+            key-positions = <16 45>;
+            bindings = <&arrowgt>;
+        };
+        // r, for `<-`
+        combo_arrow_lt {
+            timeout-ms = <50>;
+            key-positions = <16 44>;
+            bindings = <&arrowlt>;
+        };
+        // e; for `:=`
+        combo_colon_equal {
+            timeout-ms = <50>;
+            key-positions = <15 34>;
+            bindings = <&coleql>;
+        };
+        // e. for `=>`
+        combo_fat_arrow {
+            timeout-ms = <50>;
+            key-positions = <15 45>;
+            bindings = <&fatarrow>;
+        };
+        // d. for `|>`
+        combo_gt_pipe {
+            timeout-ms = <50>;
+            key-positions = <28 45>;
+            bindings = <&pipegt>;
+        };
+        // f. for `<|`
+        combo_lt_pipe {
+            timeout-ms = <50>;
+            key-positions = <28 44>;
+            bindings = <&ltpipe>;
+        };
+        // left ctrl + right ctrl = caps word, not using shifts as they are
+        // used to type parentheses
+        combo_caps_word {
+            timeout-ms = <150>;
+            key-positions = <24 35>;
+            bindings = <&caps_word>;
+        };
+        combo_lbkt_rbkt {
+            timeout-ms = <150>;
+            key-positions = <39 40>;
+            layers = <PROG>;
+            bindings = <&lrbkt>;
+        };
+        combo_lbrc_rbrc {
+            timeout-ms = <150>;
+            key-positions = <27 28>;
+            layers = <PROG>;
+            bindings = <&lrbrc>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        BASE {
+            bindings = <
+//    ┌────────────┬─────┬──────┬──────┬──────┬─────┬──────┬──────┬──────┬──────┬─────┬──────────┐
+//    │    esc     │  1  │  2   │  3   │  4   │  5  │  6   │  7   │  8   │  9   │  0  │    bs    │
+//    ├────────────┼─────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼─────┼──────────┤
+//    │ PROG tab ~ │  Q  │  W   │  E   │  R   │  T  │  Y   │  U   │  I   │  O   │  P  │ PROG \ _ │
+//    ├────────────┼─────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼─────┼──────────┤
+//    │  lctrl esc │  A  │  S   │  D   │  F   │  G  │ h/bs │  J   │  K   │  L   │  ;  │  rctrl ' │
+//    ├────────────┼─────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼─────┼──────────┤
+//    │   lshft (  │  Z  │  X   │  C   │  V   │  B  │  N   │  M   │  ,   │  .   │  /  │  rshft ) │
+//    ├────────────┼─────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼─────┼──────────┤
+//    │    ZMK `   │     │ NAVI │ lgui │ lalt │ spc │ ret  │ ralt │ rgui │ NAVI │     │   ZMK -  │
+//    └────────────┴─────┴──────┴──────┴──────┴─────┴──────┴──────┴──────┴──────┴─────┴──────────┘
+  &kp ESC              &kp N1   &kp N2     &kp N3     &kp N4     &kp N5      &kp N6    &kp N7     &kp N8      &kp N9     &kp N0     &kp BSPC
+  &tl_tabtild PROG 0   &kp Q    &kp W      &kp E      &kp R      &kp T       &kp Y     &kp U      &kp I       &kp O      &kp P      &tl_bslhund PROG 0
+  &tk LCTRL ESC        &kp A    &kp S      &kp D      &kp F      &kp G       &hbs      &kp J      &kp K       &kp L      &kp SEMI   &tk RCTRL SQT
+  &tk LSHFT LPAR       &kp Z    &kp X      &kp C      &kp V      &kp B       &kp N     &kp M      &kp COMMA   &kp DOT    &kp FSLH   &tk RSHFT RPAR
+  &tl ZMK GRAVE        &none    &mo NAVI   &kp LGUI   &kp LALT   &kp SPACE   &kp RET   &kp RALT   &kp RGUI    &mo NAVI   &none      &tl ZMK MINUS
+            >;
+        };
+        PROG {
+            bindings = <
+//    ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬─────┬─────┬─────┐
+//    │ f1 │ f2 │ f3 │ f4 │ f5 │ f6 │ f7 │ f8 │ f9 │ f10 │ f11 │ f12 │
+//    ├────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┼─────┼─────┤
+//    │    │ !  │ *  │ $  │ -  │ _  │ .  │ 7  │ 8  │  9  │  +  │     │
+//    ├────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┼─────┼─────┤
+//    │    │ &  │ #  │ ^  │ {  │ }  │ bs │ 4  │ 5  │  6  │  =  │     │
+//    ├────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┼─────┼─────┤
+//    │    │ `  │ %  │ @  │ [  │ ]  │ 0  │ 1  │ 2  │  3  │ ret │     │
+//    ├────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┼─────┼─────┤
+//    │    │    │    │    │    │    │    │    │    │     │     │     │
+//    └────┴────┴────┴────┴────┴────┴────┴────┴────┴─────┴─────┴─────┘
+  &kp F1   &kp F2      &kp F3      &kp F4      &kp F5      &kp F6      &kp F7     &kp F8   &kp F9   &kp F10   &kp F11     &kp F12
+  &trans   &kp EXCL    &kp ASTRK   &kp DLLR    &kp MINUS   &kp UNDER   &kp DOT    &kp N7   &kp N8   &kp N9    &kp PLUS    &trans
+  &trans   &kp AMPS    &kp HASH    &kp CARET   &kp LBRC    &kp RBRC    &kp BSPC   &kp N4   &kp N5   &kp N6    &kp EQUAL   &trans
+  &trans   &kp GRAVE   &kp PRCNT   &kp AT      &kp LBKT    &kp RBKT    &kp N0     &kp N1   &kp N2   &kp N3    &kp RET     &trans
+  &trans   &trans      &trans      &trans      &trans      &trans      &trans     &trans   &trans   &trans    &trans      &trans
+            >;
+        };
+        NAVI {
+            bindings = <
+//    ┌─────────┬────┬─────┬─────┬─────┬─────────┬──────┬───────┬───────┬───────┬──────┬─────┐
+//    │   f1    │ f2 │ f3  │ f4  │ f5  │   f6    │  f7  │  f8   │  f9   │  f10  │ f11  │ f12 │
+//    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
+//    │ PSCR_SC │ f1 │ f2  │ f3  │ f4  │  KILL   │      │  end  │  prv  │  nxt  │ pgup │     │
+//    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
+//    │         │ f5 │ f6  │ f7  │ f8  │  pscr   │ left │ down  │  up   │ right │      │     │
+//    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
+//    │         │ f9 │ f10 │ f11 │ f12 │ PSCR_RT │ pgdn │ bt> 0 │ bt> 4 │ bt> 1 │      │     │
+//    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
+//    │         │    │     │     │     │         │      │       │       │       │      │     │
+//    └─────────┴────┴─────┴─────┴─────┴─────────┴──────┴───────┴───────┴───────┴──────┴─────┘
+  &kp F1        &kp F2   &kp F3    &kp F4    &kp F5    &kp F6        &kp F7      &kp F8         &kp F9         &kp F10        &kp F11     &kp F12
+  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL      &trans      &kp END        &bt BT_PRV     &bt BT_NXT     &kp PG_UP   &trans
+  &trans        &kp F5   &kp F6    &kp F7    &kp F8    &kp PSCRN     &kp LEFT    &kp DOWN       &kp UP         &kp RIGHT      &trans      &trans
+  &trans        &kp F9   &kp F10   &kp F11   &kp F12   &kp PSCR_RT   &kp PG_DN   &bt BT_SEL 0   &bt BT_SEL 4   &bt BT_SEL 1   &trans      &trans
+  &trans        &trans   &trans    &trans    &trans    &trans        &trans      &trans         &trans         &trans         &trans      &trans
+            >;
+        };
+        ZMK {
+            bindings = <
+//    ┌────┬───────┬───────┬───────┬───────┬───────┬───────┬─────────┬─────────┬─────────┬─────┬─────┐
+//    │ f1 │  f2   │  f3   │  f4   │  f5   │  f6   │  f7   │   f8    │   f9    │   f10   │ f11 │ f12 │
+//    ├────┼───────┼───────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼─────┤
+//    │    │ bt> 0 │ bt> 1 │ bt> 2 │ bt> 3 │       │       │ ep TOG  │  ep ON  │ ep OFF  │     │     │
+//    ├────┼───────┼───────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼─────┤
+//    │    │ bt> 4 │       │       │  clr  │ rsftT │ rsftT │   VT1   │   VT2   │   VT3   │ VT4 │     │
+//    ├────┼───────┼───────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼─────┤
+//    │    │       │       │  prv  │  nxt  │ BOOT  │ BOOT  │ out TOG │ out USB │ out BLE │     │     │
+//    ├────┼───────┼───────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼─────┤
+//    │    │       │       │       │       │ BOOT  │ BOOT  │         │         │         │     │     │
+//    └────┴───────┴───────┴───────┴───────┴───────┴───────┴─────────┴─────────┴─────────┴─────┴─────┘
+  &kp F1   &kp F2         &kp F3         &kp F4         &kp F5         &kp F6        &kp F7        &kp F8              &kp F9             &kp F10             &kp F11   &kp F12
+  &trans   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &trans        &trans        &ext_power EP_TOG   &ext_power EP_ON   &ext_power EP_OFF   &trans    &trans
+  &trans   &bt BT_SEL 4   &trans         &trans         &bt BT_CLR     &sys_reset    &sys_reset    &vt F1              &vt F2             &vt F3              &vt F4    &trans
+  &trans   &trans         &trans         &bt BT_PRV     &bt BT_NXT     &bootloader   &bootloader   &out OUT_TOG        &out OUT_USB       &out OUT_BLE        &trans    &trans
+  &trans   &trans         &trans         &trans         &trans         &bootloader   &bootloader   &trans              &trans             &trans              &trans    &trans
+            >;
+        };
+    };
+};

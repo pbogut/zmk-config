@@ -87,7 +87,7 @@ copy_eql60_settings_reset:
 
 build_eql60_nn:
 	@mkdir -p ./build/artifacts
-	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="equals60_nnv2" -DZMK_EXTRA_MODULES="${PWD}/custom_modules/pbogut" && \
+	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="boardsource5x12 equals60_nnv2" -DZMK_EXTRA_MODULES="${PWD}/custom_modules/pbogut" && \
 	cp build/zephyr/zmk.uf2 eql60-nice_nano_v2-zmk.uf2
 
 copy_eql60_nn:
