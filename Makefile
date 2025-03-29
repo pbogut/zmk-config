@@ -63,6 +63,39 @@ copy_dactyl_gaming_settings_reset:
 		sleep 1s; \
 	done
 
+build_eql60:
+	@mkdir -p ./build/artifacts
+	${WEST} build --pristine -s zmk/app -b "boardsource_blok" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="boardsource5x12" && \
+	cp build/zephyr/zmk.uf2 eql60-boardsource_blok-zmk.uf2
+
+build_eql60_settings_reset:
+	@mkdir -p ./build/artifacts
+	${WEST} build --pristine -s zmk/app -b "boardsource_blok" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" && \
+	cp build/zephyr/zmk.uf2 eql60_settings_reset-boardsource_blok-zmk.uf2
+
+copy_eql60:
+	@while ! cp ./eql60-boardsource_blok-zmk.uf2 /run/media/pbogut/RPI-RP2/ 2> /dev/null; do \
+		echo "Waiting for device [eql60] ..."; \
+		sleep 1s; \
+	done
+
+copy_eql60_settings_reset:
+	@while ! cp ./eql60_settings_reset-boardsource_blok-zmk.uf2 /run/media/pbogut/RPI-RP2/ 2> /dev/null; do \
+		echo "Waiting for device [eql60] ..."; \
+		sleep 1s; \
+	done
+
+build_eql60_nn:
+	@mkdir -p ./build/artifacts
+	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="equals60_nnv2" -DZMK_EXTRA_MODULES="${PWD}/shields/dactyl_gaming" && \
+	cp build/zephyr/zmk.uf2 eql60-nice_nano_v2-zmk.uf2
+
+copy_eql60_nn:
+	@while ! cp ./eql60-nice_nano_v2-zmk.uf2 /run/media/pbogut/NICENANO/ 2> /dev/null; do \
+		echo "Waiting for device [eql60nn] ..."; \
+		sleep 1s; \
+	done
+
 patch:
 	git -C "${PWD}/zmk" apply  < "${PWD}/patch/nice_view_battery_percentage.patch"
 
@@ -81,5 +114,7 @@ pip_install:
 flash_kyria: build_kyria_left .WAIT build_kyria_right .WAIT copy_kyria_left .WAIT copy_kyria_right
 flash_kyria_left: build_kyria_left .WAIT copy_kyria_left
 flash_kyria_right: build_kyria_right .WAIT copy_kyria_right
+flash_eql60: build_eql60 .WAIT copy_eql60
+flash_eql60_nn: build_eql60_nn .WAIT copy_eql60_nn
 
 flash_dactyl_gaming: build_dactyl_gaming .WAIT copy_dactyl_gaming
