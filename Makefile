@@ -23,12 +23,12 @@ build_kyria_settings_reset:
 
 build_dactyl_gaming:
 	@mkdir -p ./build/artifacts
-	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="dactyl_gaming" -DZMK_EXTRA_MODULES="${PWD}/shields/dactyl_gaming" && \
+	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="dactyl_gaming" -DZMK_EXTRA_MODULES="${PWD}/custom_modules/pbogut" && \
 	cp build/zephyr/zmk.uf2 dactyl_gaming-nice_nano_v2-zmk.uf2
 
 build_dactyl_gaming_settings_reset:
 	@mkdir -p ./build/artifacts
-	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" -DZMK_EXTRA_MODULES="${PWD}/shields/dactyl_gaming" && \
+	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" -DZMK_EXTRA_MODULES="${PWD}/custom_modules/pbogut" && \
 	cp build/zephyr/zmk.uf2 dactyl_gaming_settings_reset-nice_nano_v2-zmk.uf2
 
 copy_kyria: copy_kyria_left .WAIT copy_kyria_right
@@ -87,7 +87,7 @@ copy_eql60_settings_reset:
 
 build_eql60_nn:
 	@mkdir -p ./build/artifacts
-	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="equals60_nnv2" -DZMK_EXTRA_MODULES="${PWD}/shields/dactyl_gaming" && \
+	${WEST} build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="equals60_nnv2" -DZMK_EXTRA_MODULES="${PWD}/custom_modules/pbogut" && \
 	cp build/zephyr/zmk.uf2 eql60-nice_nano_v2-zmk.uf2
 
 copy_eql60_nn:
