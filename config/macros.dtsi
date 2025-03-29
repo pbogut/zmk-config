@@ -1,0 +1,161 @@
+#include <behaviors.dtsi>
+
+/ {
+    macros {
+        vt: vt {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_press &kp LALT>
+                     , <&macro_press &kp LCTRL>
+                     , <&macro_param_1to1>
+                     , <&macro_press &kp MACRO_PLACEHOLDER>
+                     , <&macro_pause_for_release>
+                     , <&macro_param_1to1>
+                     , <&macro_release &kp MACRO_PLACEHOLDER>
+                     , <&macro_release &kp LCTRL>
+                     , <&macro_release &kp LALT>
+                     ;
+        };
+        lrpars: left_right_parens {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LPAR &kp RPAR>;
+        };
+        lrbrc: left_right_braces {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LBRC &kp RBRC>;
+        };
+        lrbkt: left_right_brackets {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LBKT &kp RBKT>;
+        };
+        tildslh: tilde_forward_slash {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_tap &kp TILDE &kp FSLH>
+                , <&macro_press &kp LCTRL>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp LCTRL>
+                ;
+        };
+        notequal: notequal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp EXCL &kp EQUAL>;
+        };
+        arrowgt: arrow_gt {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp MINUS &kp GT>;
+        };
+        arrowlt: arrow_lt {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LT &kp MINUS>;
+        };
+        coleql: colon_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp COLON &kp EQUAL>;
+        };
+        fatarrow: fat_arrow {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp EQUAL &kp GT>;
+        };
+        ltpipe: lt_pipe {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LT &kp PIPE>;
+        };
+        pipegt: pipe_gt {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp PIPE &kp GT>;
+        };
+        to_kp: to_layer_press_kp {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            bindings = <&macro_param_1to1>
+                     , <&to MACRO_PLACEHOLDER>
+                     , <&macro_param_2to1>
+                     , <&kp MACRO_PLACEHOLDER>
+                     ;
+        };
+        to_bt: to_layer_switch_bt {
+            compatible = "zmk,behavior-macro-two-param";
+            #binding-cells = <2>;
+            bindings = <&macro_param_1to1>
+                     , <&to MACRO_PLACEHOLDER>
+                     , <&macro_param_2to2>
+                     , <&bt BT_SEL MACRO_PLACEHOLDER>
+                     ;
+        };
+        tb_bt: to_base_bt {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&to 0>
+                     , <&macro_param_1to2>
+                     , <&bt BT_SEL MACRO_PLACEHOLDER>
+                     ;
+        };
+    };
+
+    behaviors {
+      tl_tabtild: tap_layer_tab_tilde {
+        compatible = "zmk,behavior-hold-tap";
+        #binding-cells = <2>;
+        flavor = "hold-preferred";
+        tapping-term-ms = <250>;
+        bindings = <&mo>, <&tabtild>;
+      };
+      tl_bslhund: tap_back_slash_minus {
+        compatible = "zmk,behavior-hold-tap";
+        #binding-cells = <2>;
+        flavor = "hold-preferred";
+        tapping-term-ms = <250>;
+        bindings = <&mo>, <&bslhund>;
+      };
+      tl: tap_layer {
+        compatible = "zmk,behavior-hold-tap";
+        #binding-cells = <2>;
+        flavor = "hold-preferred";
+        tapping-term-ms = <250>;
+        bindings = <&mo>, <&kp>;
+      };
+      tk: tap_key {
+        compatible = "zmk,behavior-hold-tap";
+        #binding-cells = <2>;
+        flavor = "hold-preferred";
+        tapping-term-ms = <250>;
+        bindings = <&kp>, <&kp>;
+      };
+      hbs: h_backspace {
+        compatible = "zmk,behavior-mod-morph";
+        #binding-cells = <0>;
+        bindings = <&kp H>, <&kp BSPC>;
+        mods = <(MOD_LCTL)>;
+      };
+      tabtild: tab_tilde {
+        compatible = "zmk,behavior-mod-morph";
+        #binding-cells = <0>;
+        bindings = <&kp TAB>, <&kp TILDE>;
+        mods = <(MOD_LCTL)>;
+      };
+      bslhund: back_slash_under {
+        compatible = "zmk,behavior-mod-morph";
+        #binding-cells = <0>;
+        bindings = <&kp BSLH>, <&kp UNDER>;
+        mods = <(MOD_RCTL)>;
+      };
+      ddel: d_delete {
+        compatible = "zmk,behavior-mod-morph";
+        #binding-cells = <0>;
+        bindings = <&kp D>, <&kp DEL>;
+        mods = <(MOD_RCTL)>;
+      };
+    };
+};
