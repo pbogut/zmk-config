@@ -1,9 +1,0 @@
-# Copyright (c) 2021 The ZMK Contributors
-# SPDX-License-Identifier: MIT
-
-if SHIELD_EQUALS60_NN
-
-config ZMK_KEYBOARD_NAME
-    default "equals60_nnv2"
-
-endif

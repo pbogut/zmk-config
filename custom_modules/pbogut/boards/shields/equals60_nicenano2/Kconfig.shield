@@ -1,5 +1,2 @@
-# Copyright (c) 2021 The ZMK Contributors
+# Shield config, nothing needed here, but file must exist
 # SPDX-License-Identifier: MIT
-
-config SHIELD_EQUALS60_NN
-    def_bool $(shields_list_contains,equals60_nnv2)
