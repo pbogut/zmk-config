@@ -117,22 +117,22 @@
 
         BASE {
             bindings = <
-//    ┌────────────┬──────┬──────┬──────┬─────┬─────┬──────┬─────┬──────┬──────┬──────┬──────────┐
-//    │    esc     │  1   │  2   │  3   │  4  │  5  │  6   │  7  │  8   │  9   │  0   │    bs    │
-//    ├────────────┼──────┼──────┼──────┼─────┼─────┼──────┼─────┼──────┼──────┼──────┼──────────┤
-//    │ PROG tab ~ │  Q   │  W   │  E   │  R  │  T  │  Y   │  U  │  I   │  O   │  P   │ PROG \ _ │
-//    ├────────────┼──────┼──────┼──────┼─────┼─────┼──────┼─────┼──────┼──────┼──────┼──────────┤
-//    │  lctrl esc │  A   │  S   │  D   │  F  │  G  │ h/bs │  J  │  K   │  L   │  ;   │  rctrl ' │
-//    ├────────────┼──────┼──────┼──────┼─────┼─────┼──────┼─────┼──────┼──────┼──────┼──────────┤
-//    │   lshft (  │  Z   │  X   │  C   │  V  │  B  │  N   │  M  │  ,   │  .   │  /   │  rshft ) │
-//    ├────────────┼──────┼──────┼──────┼─────┼─────┼──────┼─────┼──────┼──────┼──────┼──────────┤
-//    │    ZMK `   │ NAVI │ lgui │ lalt │ spc │     │      │ ret │ ralt │ rgui │ NAVI │   ZMK -  │
-//    └────────────┴──────┴──────┴──────┴─────┴─────┴──────┴─────┴──────┴──────┴──────┴──────────┘
-  &kp ESC              &kp N1     &kp N2     &kp N3     &kp N4      &kp N5   &kp N6   &kp N7    &kp N8      &kp N9     &kp N0     &kp BSPC
-  &tl_tabtild PROG 0   &kp Q      &kp W      &kp E      &kp R       &kp T    &kp Y    &kp U     &kp I       &kp O      &kp P      &tl_bslhund PROG 0
-  &tk LCTRL ESC        &kp A      &kp S      &kp D      &kp F       &kp G    &hbs     &kp J     &kp K       &kp L      &kp SEMI   &tk RCTRL SQT
-  &tk LSHFT LPAR       &kp Z      &kp X      &kp C      &kp V       &kp B    &kp N    &kp M     &kp COMMA   &kp DOT    &kp FSLH   &tk RSHFT RPAR
-  &tl ZMK GRAVE        &mo NAVI   &kp LGUI   &kp LALT   &kp SPACE   &none    &none    &kp RET   &kp RALT    &kp RGUI   &mo NAVI   &tl ZMK MINUS
+//    ┌────────────┬──────┬──────┬──────┬──────┬─────┬──────┬──────┬──────┬──────┬──────┬──────────┐
+//    │    esc     │  1   │  2   │  3   │  4   │  5  │  6   │  7   │  8   │  9   │  0   │    bs    │
+//    ├────────────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼──────┼──────────┤
+//    │ PROG tab ~ │  Q   │  W   │  E   │  R   │  T  │  Y   │  U   │  I   │  O   │  P   │ PROG \ _ │
+//    ├────────────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼──────┼──────────┤
+//    │  lctrl esc │  A   │  S   │  D   │  F   │  G  │ h/bs │  J   │  K   │  L   │  ;   │  rctrl ' │
+//    ├────────────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼──────┼──────────┤
+//    │   lshft (  │  Z   │  X   │  C   │  V   │  B  │  N   │  M   │  ,   │  .   │  /   │  rshft ) │
+//    ├────────────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼──────┼──────────┤
+//    │    ZMK `   │ NAVI │ NAVI │ lgui │ lalt │ spc │ ret  │ ralt │ rgui │ NAVI │ NAVI │   ZMK -  │
+//    └────────────┴──────┴──────┴──────┴──────┴─────┴──────┴──────┴──────┴──────┴──────┴──────────┘
+  &kp ESC              &kp N1     &kp N2     &kp N3     &kp N4     &kp N5      &kp N6    &kp N7     &kp N8      &kp N9     &kp N0     &kp BSPC
+  &tl_tabtild PROG 0   &kp Q      &kp W      &kp E      &kp R      &kp T       &kp Y     &kp U      &kp I       &kp O      &kp P      &tl_bslhund PROG 0
+  &tk LCTRL ESC        &kp A      &kp S      &kp D      &kp F      &kp G       &hbs      &kp J      &kp K       &kp L      &kp SEMI   &tk RCTRL SQT
+  &tk LSHFT LPAR       &kp Z      &kp X      &kp C      &kp V      &kp B       &kp N     &kp M      &kp COMMA   &kp DOT    &kp FSLH   &tk RSHFT RPAR
+  &tl ZMK GRAVE        &mo NAVI   &mo NAVI   &kp LGUI   &kp LALT   &kp SPACE   &kp RET   &kp RALT   &kp RGUI    &mo NAVI   &mo NAVI   &tl ZMK MINUS
             >;
         };
         PROG {
