@@ -102,7 +102,13 @@ patch:
 update:
 	git -C "${PWD}/zmk" apply -R < "${PWD}/patch/nice_view_battery_percentage.patch"; \
 	${WEST} update; \
+	${WEST} zephyr-export; \
 	git -C "${PWD}/zmk" apply < "${PWD}/patch/nice_view_battery_percentage.patch";
+
+init:
+	west init -l config; \
+	west update; \
+	west zephyr-export;
 
 pyenv:
 	python -m venv "${PWD}/.pyenv"
