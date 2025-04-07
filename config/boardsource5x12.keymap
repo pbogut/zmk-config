@@ -14,8 +14,9 @@
 #define BASE 0
 #define PROG 1
 #define NAVI 2
-#define GAME 3
-#define ZMK  4
+#define ZMK  3
+
+#define GAME 4
 
 #define KILL    LG(LS(Q))
 #define PSCR_SC LS(PSCRN)
@@ -178,22 +179,22 @@
         };
         ZMK {
             bindings = <
-//    ┌─────────┬─────────┬───────┬───────┬───────┬───────┬───────┬─────────┬─────────┬─────────┬─────┬────┐
-//    │ to BASE │ to GAME │       │       │       │       │       │         │         │         │     │    │
-//    ├─────────┼─────────┼───────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
-//    │         │  bt> 0  │ bt> 1 │ bt> 2 │ bt> 3 │       │       │ ep TOG  │  ep ON  │ ep OFF  │     │    │
-//    ├─────────┼─────────┼───────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
-//    │         │  bt> 4  │       │       │  clr  │ rsftT │ rsftT │   VT1   │   VT2   │   VT3   │ VT4 │    │
-//    ├─────────┼─────────┼───────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
-//    │         │         │       │  prv  │  nxt  │ BOOT  │ BOOT  │ out TOG │ out USB │ out BLE │     │    │
-//    ├─────────┼─────────┼───────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
-//    │         │         │       │       │       │ BOOT  │ BOOT  │         │         │         │     │    │
-//    └─────────┴─────────┴───────┴───────┴───────┴───────┴───────┴─────────┴─────────┴─────────┴─────┴────┘
-  &to BASE   &to GAME       &trans         &trans         &trans         &trans        &trans        &trans              &trans             &trans              &trans   &trans
-  &trans     &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &trans        &trans        &ext_power EP_TOG   &ext_power EP_ON   &ext_power EP_OFF   &trans   &trans
-  &trans     &bt BT_SEL 4   &trans         &trans         &bt BT_CLR     &sys_reset    &sys_reset    &vt F1              &vt F2             &vt F3              &vt F4   &trans
-  &trans     &trans         &trans         &bt BT_PRV     &bt BT_NXT     &bootloader   &bootloader   &out OUT_TOG        &out OUT_USB       &out OUT_BLE        &trans   &trans
-  &trans     &trans         &trans         &trans         &trans         &bootloader   &bootloader   &trans              &trans             &trans              &trans   &trans
+//    ┌────┬─────────┬─────────┬───────┬───────┬───────┬───────┬─────────┬─────────┬─────────┬─────┬────┐
+//    │    │ to BASE │ to GAME │       │       │       │       │         │         │         │     │    │
+//    ├────┼─────────┼─────────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │  bt> 0  │  bt> 1  │ bt> 2 │ bt> 3 │       │       │ ep TOG  │  ep ON  │ ep OFF  │     │    │
+//    ├────┼─────────┼─────────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │  bt> 4  │         │       │  clr  │ rsftT │ rsftT │   VT1   │   VT2   │   VT3   │ VT4 │    │
+//    ├────┼─────────┼─────────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │         │         │  prv  │  nxt  │ BOOT  │ BOOT  │ out TOG │ out USB │ out BLE │     │    │
+//    ├────┼─────────┼─────────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │         │         │       │       │ BOOT  │ BOOT  │         │         │         │     │    │
+//    └────┴─────────┴─────────┴───────┴───────┴───────┴───────┴─────────┴─────────┴─────────┴─────┴────┘
+  &trans   &to BASE       &to GAME       &trans         &trans         &trans        &trans        &trans              &trans             &trans              &trans   &trans
+  &trans   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &trans        &trans        &ext_power EP_TOG   &ext_power EP_ON   &ext_power EP_OFF   &trans   &trans
+  &trans   &bt BT_SEL 4   &trans         &trans         &bt BT_CLR     &sys_reset    &sys_reset    &vt F1              &vt F2             &vt F3              &vt F4   &trans
+  &trans   &trans         &trans         &bt BT_PRV     &bt BT_NXT     &bootloader   &bootloader   &out OUT_TOG        &out OUT_USB       &out OUT_BLE        &trans   &trans
+  &trans   &trans         &trans         &trans         &trans         &bootloader   &bootloader   &trans              &trans             &trans              &trans   &trans
             >;
         };
         GAME {
@@ -207,13 +208,13 @@
 //    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
 //    │ lshft │    │    │    │    │    │    │    │    │    │    │ rshft │
 //    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
-//    │       │    │    │    │    │    │    │    │    │    │    │       │
+//    │ lctrl │    │    │    │    │    │    │    │    │    │    │       │
 //    └───────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴───────┘
   &trans      &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
   &kp TAB     &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
   &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
   &kp LSHFT   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &kp RSHFT
-  &trans      &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+  &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
             >;
         };
     };
