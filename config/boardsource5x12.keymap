@@ -119,22 +119,22 @@
 
         BASE {
             bindings = <
-//    ┌────────────┬──────┬──────┬──────┬──────┬─────┬──────┬──────┬──────┬──────┬──────┬──────────┐
-//    │    esc     │  1   │  2   │  3   │  4   │  5  │  6   │  7   │  8   │  9   │  0   │    bs    │
-//    ├────────────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼──────┼──────────┤
-//    │ PROG tab ~ │  Q   │  W   │  E   │  R   │  T  │  Y   │  U   │  I   │  O   │  P   │ PROG \ _ │
-//    ├────────────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼──────┼──────────┤
-//    │  lctrl esc │  A   │  S   │  D   │  F   │  G  │ h/bs │  J   │  K   │  L   │  ;   │  rctrl ' │
-//    ├────────────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼──────┼──────────┤
-//    │   lshft (  │  Z   │  X   │  C   │  V   │  B  │  N   │  M   │  ,   │  .   │  /   │  rshft ) │
-//    ├────────────┼──────┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼──────┼──────────┤
-//    │    ZMK `   │ NAVI │ NAVI │ lgui │ lalt │ spc │ ret  │ ralt │ rgui │ NAVI │ NAVI │   ZMK -  │
-//    └────────────┴──────┴──────┴──────┴──────┴─────┴──────┴──────┴──────┴──────┴──────┴──────────┘
+//    ┌────────────┬───┬──────┬──────┬──────┬─────┬──────┬──────┬──────┬──────┬───┬──────────┐
+//    │    esc     │ 1 │  2   │  3   │  4   │  5  │  6   │  7   │  8   │  9   │ 0 │    bs    │
+//    ├────────────┼───┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼───┼──────────┤
+//    │ PROG tab ~ │ Q │  W   │  E   │  R   │  T  │  Y   │  U   │  I   │  O   │ P │ PROG \ _ │
+//    ├────────────┼───┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼───┼──────────┤
+//    │  lctrl esc │ A │  S   │  D   │  F   │  G  │ h/bs │  J   │  K   │  L   │ ; │  rctrl ' │
+//    ├────────────┼───┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼───┼──────────┤
+//    │   lshft (  │ Z │  X   │  C   │  V   │  B  │  N   │  M   │  ,   │  .   │ / │  rshft ) │
+//    ├────────────┼───┼──────┼──────┼──────┼─────┼──────┼──────┼──────┼──────┼───┼──────────┤
+//    │    ZMK `   │ [ │ NAVI │ lgui │ lalt │ spc │ ret  │ ralt │ rgui │ NAVI │ ] │   ZMK -  │
+//    └────────────┴───┴──────┴──────┴──────┴─────┴──────┴──────┴──────┴──────┴───┴──────────┘
   &kp ESC              &kp N1     &kp N2     &kp N3     &kp N4     &kp N5      &kp N6    &kp N7     &kp N8      &kp N9     &kp N0     &kp BSPC
   &tl_tabtild PROG 0   &kp Q      &kp W      &kp E      &kp R      &kp T       &kp Y     &kp U      &kp I       &kp O      &kp P      &tl_bslhund PROG 0
   &tk LCTRL ESC        &kp A      &kp S      &kp D      &kp F      &kp G       &hbs      &kp J      &kp K       &kp L      &kp SEMI   &tk RCTRL SQT
   &tk LSHFT LPAR       &kp Z      &kp X      &kp C      &kp V      &kp B       &kp N     &kp M      &kp COMMA   &kp DOT    &kp FSLH   &tk RSHFT RPAR
-  &tl ZMK GRAVE        &mo NAVI   &mo NAVI   &kp LGUI   &kp LALT   &kp SPACE   &kp RET   &kp RALT   &kp RGUI    &mo NAVI   &mo NAVI   &tl ZMK MINUS
+  &tl ZMK GRAVE        &kp LBKT   &mo NAVI   &kp LGUI   &kp LALT   &kp SPACE   &kp RET   &kp RALT   &kp RGUI    &mo NAVI   &kp RBKT   &tl ZMK MINUS
             >;
         };
         PROG {
@@ -160,9 +160,9 @@
         NAVI {
             bindings = <
 //    ┌─────────┬────┬─────┬─────┬─────┬─────────┬──────┬───────┬───────┬───────┬──────┬─────┐
-//    │   f1    │ f2 │ f3  │ f4  │ f5  │   f6    │  f7  │  f8   │  f9   │  f10  │ f11  │ f12 │
+//    │         │ f1 │ f2  │ f3  │ f4  │   f5    │  f6  │  f7   │  f8   │  f9   │ f10  │ f11 │
 //    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
-//    │ PSCR_SC │ f1 │ f2  │ f3  │ f4  │  KILL   │      │  end  │  prv  │  nxt  │ pgup │     │
+//    │ PSCR_SC │ f1 │ f2  │ f3  │ f4  │  KILL   │      │  end  │  prv  │  nxt  │ pgup │ f12 │
 //    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
 //    │         │ f5 │ f6  │ f7  │ f8  │  pscr   │ left │ down  │  up   │ right │      │     │
 //    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
@@ -170,8 +170,8 @@
 //    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
 //    │         │    │     │     │     │         │      │       │       │       │      │     │
 //    └─────────┴────┴─────┴─────┴─────┴─────────┴──────┴───────┴───────┴───────┴──────┴─────┘
-  &kp F1        &kp F2   &kp F3    &kp F4    &kp F5    &kp F6        &kp F7      &kp F8         &kp F9         &kp F10        &kp F11     &kp F12
-  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL      &trans      &kp END        &bt BT_PRV     &bt BT_NXT     &kp PG_UP   &trans
+  &trans        &kp F1   &kp F2    &kp F3    &kp F4    &kp F5        &kp F6      &kp F7         &kp F8         &kp F9         &kp F10     &kp F11
+  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL      &trans      &kp END        &bt BT_PRV     &bt BT_NXT     &kp PG_UP   &kp F12
   &trans        &kp F5   &kp F6    &kp F7    &kp F8    &kp PSCRN     &kp LEFT    &kp DOWN       &kp UP         &kp RIGHT      &trans      &trans
   &trans        &kp F9   &kp F10   &kp F11   &kp F12   &kp PSCR_RT   &kp PG_DN   &bt BT_SEL 0   &bt BT_SEL 4   &bt BT_SEL 1   &trans      &trans
   &trans        &trans   &trans    &trans    &trans    &trans        &trans      &trans         &trans         &trans         &trans      &trans
@@ -208,13 +208,13 @@
 //    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
 //    │ lshft │    │    │    │    │    │    │    │    │    │    │ rshft │
 //    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
-//    │ lctrl │    │    │    │    │    │    │    │    │    │    │       │
+//    │ lctrl │    │    │    │ [  │    │    │ ]  │    │    │    │       │
 //    └───────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴───────┘
-  &trans      &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
-  &kp TAB     &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
-  &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
-  &kp LSHFT   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &kp RSHFT
-  &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+  &trans      &trans   &trans   &trans   &trans     &trans   &trans   &trans     &trans   &trans   &trans   &trans
+  &kp TAB     &trans   &trans   &trans   &trans     &trans   &trans   &trans     &trans   &trans   &trans   &trans
+  &kp LCTRL   &trans   &trans   &trans   &trans     &trans   &trans   &trans     &trans   &trans   &trans   &trans
+  &kp LSHFT   &trans   &trans   &trans   &trans     &trans   &trans   &trans     &trans   &trans   &trans   &kp RSHFT
+  &kp LCTRL   &trans   &trans   &trans   &kp LBKT   &trans   &trans   &kp RBKT   &trans   &trans   &trans   &trans
             >;
         };
     };
