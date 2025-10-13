@@ -42,6 +42,7 @@
             timeout-ms = <150>;
             key-positions = <36 47>;
             bindings = <&lrpars>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // tilde and forward slash `~/` - normaly you would nieed to use grave
         // combo with shift and then slash. We are skipping shift here
@@ -50,48 +51,56 @@
             slow-release;
             key-positions = <12 24 46>;
             bindings = <&tildslh>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // q; for `!=`
         combo_not_equal {
             timeout-ms = <50>;
             key-positions = <13 34>;
             bindings = <&notequal>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // r. for `->`
         combo_arrow_gt {
             timeout-ms = <50>;
             key-positions = <16 45>;
             bindings = <&arrowgt>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // r, for `<-`
         combo_arrow_lt {
             timeout-ms = <50>;
             key-positions = <16 44>;
             bindings = <&arrowlt>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // e; for `:=`
         combo_colon_equal {
             timeout-ms = <50>;
             key-positions = <15 34>;
             bindings = <&coleql>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // e. for `=>`
         combo_fat_arrow {
             timeout-ms = <50>;
             key-positions = <15 45>;
             bindings = <&fatarrow>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // d. for `|>`
         combo_gt_pipe {
             timeout-ms = <50>;
             key-positions = <28 45>;
             bindings = <&pipegt>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // f. for `<|`
         combo_lt_pipe {
             timeout-ms = <50>;
             key-positions = <28 44>;
             bindings = <&ltpipe>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         // left ctrl + right ctrl = caps word, not using shifts as they are
         // used to type parentheses
@@ -99,6 +108,7 @@
             timeout-ms = <150>;
             key-positions = <24 35>;
             bindings = <&caps_word>;
+            layers = <BASE PROG NAVI ZMK>;
         };
         combo_lbkt_rbkt {
             timeout-ms = <150>;
