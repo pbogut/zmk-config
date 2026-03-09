@@ -1,0 +1,11 @@
+{
+  "packages": [
+    "python312",
+    "python312Packages.west",
+    "python312Packages.pip",
+    "github:nix-community/zephyr-nix#sdkFull-0_16"
+  ],
+  "shell": {
+    "init_hook": []
+  }
+}

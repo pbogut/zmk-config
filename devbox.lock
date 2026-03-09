@@ -1,0 +1,26 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "github:NixOS/nixpkgs/nixpkgs-unstable": {
+      "last_modified": "2026-03-08T08:02:12Z",
+      "resolved": "github:NixOS/nixpkgs/608d0cadfed240589a7eea422407a547ad626a14?lastModified=1772956932&narHash=sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY%3D"
+    },
+    "github:nix-community/zephyr-nix#sdkFull-0_16": {
+      "last_modified": "2026-01-07T13:16:12Z",
+      "resolved": "github:nix-community/zephyr-nix/39661e3a58b670a3b73b9a2b56c8b516b7284174?lastModified=1767791772&narHash=sha256-XPeH2jYVn2C7A3Yz7kSydwrbaX06vRpSNlMnL%2BcKqIw%3D#sdkFull-0_16"
+    },
+    "python312": {
+      "plugin_version": "0.0.4",
+      "resolved": "github:NixOS/nixpkgs/608d0cadfed240589a7eea422407a547ad626a14?narHash=sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY%3D#python312",
+      "source": "nixpkg"
+    },
+    "python312Packages.pip": {
+      "resolved": "github:NixOS/nixpkgs/608d0cadfed240589a7eea422407a547ad626a14?narHash=sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY%3D#python312Packages.pip",
+      "source": "nixpkg"
+    },
+    "python312Packages.west": {
+      "resolved": "github:NixOS/nixpkgs/608d0cadfed240589a7eea422407a547ad626a14?narHash=sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY%3D#python312Packages.west",
+      "source": "nixpkg"
+    }
+  }
+}
