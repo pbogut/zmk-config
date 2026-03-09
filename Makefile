@@ -45,7 +45,7 @@ copy_kyria_right:
 		sleep 1s; \
 	done
 
-copy_kyria_gaming_settings_reset:
+copy_kyria_settings_reset:
 	@while ! cp ./kyria_settings_reset-nice_nano_v2-zmk.uf2 /run/media/pbogut/NICENANO/ 2> /dev/null; do \
 		echo "Waiting for device [kyria] ..."; \
 		sleep 1s; \
@@ -106,9 +106,9 @@ update:
 	git -C "${PWD}/zmk" apply < "${PWD}/patch/nice_view_battery_percentage.patch";
 
 init:
-	west init -l config; \
-	west update; \
-	west zephyr-export;
+	${WEST} init -l config; \
+	${WEST} update; \
+	${WEST} zephyr-export;
 
 pyenv:
 	python -m venv "${PWD}/.pyenv"
@@ -120,7 +120,11 @@ pip_install:
 flash_kyria: build_kyria_left .WAIT build_kyria_right .WAIT copy_kyria_left .WAIT copy_kyria_right
 flash_kyria_left: build_kyria_left .WAIT copy_kyria_left
 flash_kyria_right: build_kyria_right .WAIT copy_kyria_right
+flash_kyria_settings_reset: build_kyria_settings_reset .WAIT copy_kyria_settings_reset
+
 flash_eql60: build_eql60 .WAIT copy_eql60
 flash_eql60_nn: build_eql60_nn .WAIT copy_eql60_nn
 
 flash_dactyl_gaming: build_dactyl_gaming .WAIT copy_dactyl_gaming
+
+.PHONY: patch
