@@ -12,15 +12,22 @@
 #include "macros.dtsi"
 
 #define BASE 0
-#define PROG 1
-#define NAVI 2
-#define ZMK  3
 
-#define GAME 4
+#define GAME 1
+#define MMO 2
+
+#define PROG 3
+#define NAVI 4
+#define ZMK  5
 
 #define KILL    LG(LS(Q))
 #define PSCR_SC LS(PSCRN)
 #define PSCR_RT LG(PSCRN)
+// STEAM shortcuts
+#define STEAM   LS(LC(TAB))
+#define STM_QA  LS(LC(BSPC))
+#define S_SCST  F12
+#define S_CLIP  LG(F12)
 
 //    ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
 //    │ 0  │ 1  │ 2  │ 3  │ 4  │ 5  │ 6  │ 7  │ 8  │ 9  │ 10 │ 11 │
@@ -147,6 +154,46 @@
   &tl ZMK GRAVE        &kp LBKT   &mo NAVI   &kp LGUI   &kp LALT   &kp SPACE   &kp RET   &kp RALT   &kp RGUI    &mo NAVI   &kp RBKT   &tl ZMK MINUS
             >;
         };
+        GAME {
+            bindings = <
+//    ┌───────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬───────┐
+//    │       │    │    │    │    │    │    │    │    │    │    │       │
+//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
+//    │  tab  │    │    │    │    │    │    │    │    │    │    │       │
+//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
+//    │ lctrl │    │    │    │    │    │    │    │    │    │    │       │
+//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
+//    │ lshft │    │    │    │    │    │    │    │    │    │    │ rshft │
+//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
+//    │ lctrl │    │    │    │    │    │    │    │    │    │    │       │
+//    └───────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴───────┘
+  &trans      &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+  &kp TAB     &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+  &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+  &kp LSHFT   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &kp RSHFT
+  &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans
+            >;
+        };
+        MMO {
+            bindings = <
+//    ┌───────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬─────┬───────┐
+//    │       │ f1 │ f2 │ f3 │ f4 │ f5 │ f6 │ f7 │ f8 │ f9 │ f10 │       │
+//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┼───────┤
+//    │  tab  │    │    │    │    │    │    │    │    │    │     │       │
+//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┼───────┤
+//    │ lctrl │    │    │    │    │    │    │    │    │    │     │       │
+//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┼───────┤
+//    │ lshft │    │    │    │    │    │    │    │    │    │     │ rshft │
+//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┼───────┤
+//    │ lctrl │    │    │    │    │    │    │    │    │    │     │       │
+//    └───────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴─────┴───────┘
+  &trans      &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   &kp F6   &kp F7   &kp F8   &kp F9   &kp F10   &trans
+  &kp TAB     &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans    &trans
+  &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans    &trans
+  &kp LSHFT   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans    &kp RSHFT
+  &kp LCTRL   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans    &trans
+            >;
+        };
         PROG {
             bindings = <
 //    ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬─────┬─────┬─────┐
@@ -169,62 +216,42 @@
         };
         NAVI {
             bindings = <
-//    ┌─────────┬────┬─────┬─────┬─────┬─────────┬──────┬───────┬───────┬───────┬──────┬─────┐
-//    │         │ f1 │ f2  │ f3  │ f4  │   f5    │  f6  │  f7   │  f8   │  f9   │ f10  │ f11 │
-//    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
-//    │ PSCR_SC │ f1 │ f2  │ f3  │ f4  │  KILL   │      │  end  │  prv  │  nxt  │ pgup │ f12 │
-//    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
-//    │         │ f5 │ f6  │ f7  │ f8  │  pscr   │ left │ down  │  up   │ right │      │     │
-//    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
-//    │         │ f9 │ f10 │ f11 │ f12 │ PSCR_RT │ pgdn │ bt> 0 │ bt> 4 │ bt> 1 │      │     │
-//    ├─────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
-//    │         │    │     │     │     │         │      │       │       │       │      │     │
-//    └─────────┴────┴─────┴─────┴─────┴─────────┴──────┴───────┴───────┴───────┴──────┴─────┘
-  &trans        &kp F1   &kp F2    &kp F3    &kp F4    &kp F5        &kp F6      &kp F7         &kp F8         &kp F9         &kp F10     &kp F11
-  &kp PSCR_SC   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL      &trans      &kp END        &bt BT_PRV     &bt BT_NXT     &kp PG_UP   &kp F12
-  &trans        &kp F5   &kp F6    &kp F7    &kp F8    &kp PSCRN     &kp LEFT    &kp DOWN       &kp UP         &kp RIGHT      &trans      &trans
-  &trans        &kp F9   &kp F10   &kp F11   &kp F12   &kp PSCR_RT   &kp PG_DN   &bt BT_SEL 0   &bt BT_SEL 4   &bt BT_SEL 1   &trans      &trans
-  &trans        &trans   &trans    &trans    &trans    &trans        &trans      &trans         &trans         &trans         &trans      &trans
+//    ┌───────────┬────┬─────┬─────┬─────┬─────────┬──────┬───────┬───────┬───────┬──────┬─────┐
+//    │ &gp_btn A │ f1 │ f2  │ f3  │ f4  │   f5    │  f6  │  f7   │  f8   │  f9   │ f10  │ f11 │
+//    ├───────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
+//    │  STM_QA   │ f1 │ f2  │ f3  │ f4  │  KILL   │      │  end  │  prv  │  nxt  │ pgup │ f12 │
+//    ├───────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
+//    │  S_SCST   │ f5 │ f6  │ f7  │ f8  │  pscr   │ left │ down  │  up   │ right │      │     │
+//    ├───────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
+//    │  S_CLIP   │ f9 │ f10 │ f11 │ f12 │ PSCR_RT │ pgdn │ bt> 0 │ bt> 4 │ bt> 1 │      │     │
+//    ├───────────┼────┼─────┼─────┼─────┼─────────┼──────┼───────┼───────┼───────┼──────┼─────┤
+//    │           │    │     │     │     │         │      │       │       │       │      │     │
+//    └───────────┴────┴─────┴─────┴─────┴─────────┴──────┴───────┴───────┴───────┴──────┴─────┘
+  &gp_btn A    &kp F1   &kp F2    &kp F3    &kp F4    &kp F5        &kp F6      &kp F7         &kp F8         &kp F9         &kp F10     &kp F11
+  &kp STM_QA   &kp F1   &kp F2    &kp F3    &kp F4    &kp KILL      &trans      &kp END        &bt BT_PRV     &bt BT_NXT     &kp PG_UP   &kp F12
+  &kp S_SCST   &kp F5   &kp F6    &kp F7    &kp F8    &kp PSCRN     &kp LEFT    &kp DOWN       &kp UP         &kp RIGHT      &trans      &trans
+  &kp S_CLIP   &kp F9   &kp F10   &kp F11   &kp F12   &kp PSCR_RT   &kp PG_DN   &bt BT_SEL 0   &bt BT_SEL 4   &bt BT_SEL 1   &trans      &trans
+  &trans       &trans   &trans    &trans    &trans    &trans        &trans      &trans         &trans         &trans         &trans      &trans
             >;
         };
         ZMK {
             bindings = <
-//    ┌────┬─────────┬─────────┬───────┬───────┬───────┬───────┬─────────┬─────────┬─────────┬─────┬────┐
-//    │    │ to BASE │ to GAME │       │       │       │       │         │         │         │     │    │
-//    ├────┼─────────┼─────────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
-//    │    │  bt> 0  │  bt> 1  │ bt> 2 │ bt> 3 │       │       │ ep TOG  │  ep ON  │ ep OFF  │     │    │
-//    ├────┼─────────┼─────────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
-//    │    │  bt> 4  │         │       │  clr  │ rsftT │ rsftT │   VT1   │   VT2   │   VT3   │ VT4 │    │
-//    ├────┼─────────┼─────────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
-//    │    │         │         │  prv  │  nxt  │ BOOT  │ BOOT  │ out TOG │ out USB │ out BLE │     │    │
-//    ├────┼─────────┼─────────┼───────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
-//    │    │         │         │       │       │ BOOT  │ BOOT  │         │         │         │     │    │
-//    └────┴─────────┴─────────┴───────┴───────┴───────┴───────┴─────────┴─────────┴─────────┴─────┴────┘
-  &trans   &to BASE       &to GAME       &trans         &trans         &trans        &trans        &trans              &trans             &trans              &trans   &trans
+//    ┌────┬─────────┬─────────┬────────┬───────┬───────┬───────┬─────────┬─────────┬─────────┬─────┬────┐
+//    │    │ to BASE │ to GAME │ to MMO │       │       │       │         │         │         │     │    │
+//    ├────┼─────────┼─────────┼────────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │  bt> 0  │  bt> 1  │ bt> 2  │ bt> 3 │       │       │ ep TOG  │  ep ON  │ ep OFF  │     │    │
+//    ├────┼─────────┼─────────┼────────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │  bt> 4  │         │        │  clr  │ rsftT │ rsftT │   VT1   │   VT2   │   VT3   │ VT4 │    │
+//    ├────┼─────────┼─────────┼────────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │         │         │  prv   │  nxt  │ BOOT  │ BOOT  │ out TOG │ out USB │ out BLE │     │    │
+//    ├────┼─────────┼─────────┼────────┼───────┼───────┼───────┼─────────┼─────────┼─────────┼─────┼────┤
+//    │    │         │         │        │       │ BOOT  │ BOOT  │         │         │         │     │    │
+//    └────┴─────────┴─────────┴────────┴───────┴───────┴───────┴─────────┴─────────┴─────────┴─────┴────┘
+  &trans   &to BASE       &to GAME       &to MMO        &trans         &trans        &trans        &trans              &trans             &trans              &trans   &trans
   &trans   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &trans        &trans        &ext_power EP_TOG   &ext_power EP_ON   &ext_power EP_OFF   &trans   &trans
   &trans   &bt BT_SEL 4   &trans         &trans         &bt BT_CLR     &sys_reset    &sys_reset    &vt F1              &vt F2             &vt F3              &vt F4   &trans
   &trans   &trans         &trans         &bt BT_PRV     &bt BT_NXT     &bootloader   &bootloader   &out OUT_TOG        &out OUT_USB       &out OUT_BLE        &trans   &trans
   &trans   &trans         &trans         &trans         &trans         &bootloader   &bootloader   &trans              &trans             &trans              &trans   &trans
-            >;
-        };
-        GAME {
-            bindings = <
-//    ┌───────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬───────┐
-//    │       │    │    │    │    │    │    │    │    │    │    │       │
-//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
-//    │  tab  │    │    │    │    │    │    │    │    │    │    │       │
-//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
-//    │ lctrl │    │    │    │    │    │    │    │    │    │    │       │
-//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
-//    │ lshft │    │    │    │    │    │    │    │    │    │    │ rshft │
-//    ├───────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼───────┤
-//    │ lctrl │    │    │    │ [  │    │    │ ]  │    │    │    │       │
-//    └───────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴───────┘
-  &trans      &trans   &trans   &trans   &trans     &trans   &trans   &trans     &trans   &trans   &trans   &trans
-  &kp TAB     &trans   &trans   &trans   &trans     &trans   &trans   &trans     &trans   &trans   &trans   &trans
-  &kp LCTRL   &trans   &trans   &trans   &trans     &trans   &trans   &trans     &trans   &trans   &trans   &trans
-  &kp LSHFT   &trans   &trans   &trans   &trans     &trans   &trans   &trans     &trans   &trans   &trans   &kp RSHFT
-  &kp LCTRL   &trans   &trans   &trans   &kp LBKT   &trans   &trans   &kp RBKT   &trans   &trans   &trans   &trans
             >;
         };
     };
