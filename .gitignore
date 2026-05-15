@@ -4,7 +4,9 @@
 /bootloader/
 /build/
 /modules/
+/optional/
 /tools/
 /zephyr/
 /zmk/
+/.venv/
 *.uf2

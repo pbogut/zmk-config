@@ -1,0 +1,253 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "github:NixOS/nixpkgs/nixpkgs-unstable": {
+      "last_modified": "2026-03-18T13:30:56Z",
+      "resolved": "github:NixOS/nixpkgs/9cf7092bdd603554bd8b63c216e8943cf9b12512?lastModified=1773840656&narHash=sha256-9tpvMGFteZnd3gRQZFlRCohVpqooygFuy9yjuyRL2C0%3D"
+    },
+    "github:nix-community/zephyr-nix#sdkFull-0_16": {
+      "last_modified": "2026-01-07T13:16:12Z",
+      "resolved": "github:nix-community/zephyr-nix/39661e3a58b670a3b73b9a2b56c8b516b7284174?lastModified=1767791772&narHash=sha256-XPeH2jYVn2C7A3Yz7kSydwrbaX06vRpSNlMnL%2BcKqIw%3D#sdkFull-0_16"
+    },
+    "python312": {
+      "plugin_version": "0.0.4",
+      "resolved": "github:NixOS/nixpkgs/608d0cadfed240589a7eea422407a547ad626a14?narHash=sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY%3D#python312",
+      "source": "nixpkg",
+      "systems": {
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "path": "/nix/store/ja66iyv96y1cbjhj7fl5ghqqmy9fyacj-python3-3.12.13",
+              "default": true
+            }
+          ]
+        }
+      }
+    },
+    "python312Packages.pip": {
+      "resolved": "github:NixOS/nixpkgs/608d0cadfed240589a7eea422407a547ad626a14?narHash=sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY%3D#python312Packages.pip",
+      "source": "nixpkg",
+      "systems": {
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "man",
+              "path": "/nix/store/gdwnns5g08hs28mynp8s32hvppsm3504-python3.12-pip-25.3-man",
+              "default": true
+            },
+            {
+              "path": "/nix/store/pj7x50i8wx7r8my3dziv3yil42y46adv-python3.12-pip-25.3",
+              "default": true
+            }
+          ]
+        }
+      }
+    },
+    "python312Packages.protobuf@latest": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#python312Packages.protobuf",
+      "source": "devbox-search",
+      "version": "6.33.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5inidrhy8q5li3vbf3lxd32bnsczhgmy-python3.12-protobuf-6.33.1",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/2snqwc4i2w0d4hn7q38nwki6kkn0b957-python3.12-protobuf-6.33.1-dist"
+            }
+          ],
+          "store_path": "/nix/store/5inidrhy8q5li3vbf3lxd32bnsczhgmy-python3.12-protobuf-6.33.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/lh16s0j05bds1pb5jp1s6zq2c89713vd-python3.12-protobuf-6.33.1",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/gywciygcpyjwfyhr03hn9aqhczw2604y-python3.12-protobuf-6.33.1-dist"
+            }
+          ],
+          "store_path": "/nix/store/lh16s0j05bds1pb5jp1s6zq2c89713vd-python3.12-protobuf-6.33.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/lfh522lw3ch1dpx5m7cj6a5nlxn6278i-python3.12-protobuf-6.33.1",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/h9wa9g5iyjx3bxsnvbzc5x5mji3fp79h-python3.12-protobuf-6.33.1-dist"
+            }
+          ],
+          "store_path": "/nix/store/lfh522lw3ch1dpx5m7cj6a5nlxn6278i-python3.12-protobuf-6.33.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/0ncirnfvrsygf0bc8mryzkh5lq3pvwlm-python3.12-protobuf-6.33.1",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/7h7hjz5p3py09swzfyd7c8n6ry3rnlny-python3.12-protobuf-6.33.1-dist"
+            }
+          ],
+          "store_path": "/nix/store/0ncirnfvrsygf0bc8mryzkh5lq3pvwlm-python3.12-protobuf-6.33.1"
+        }
+      }
+    },
+    "python312Packages.pyelftools@latest": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#python312Packages.pyelftools",
+      "source": "devbox-search",
+      "version": "0.32",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/gbp4nbk8gcwh4ksf3bzhz4izib6ai3c1-python3.12-pyelftools-0.32",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/hvznncnqqn12p8wkp8czkf5mphgw4kfk-python3.12-pyelftools-0.32-dist"
+            }
+          ],
+          "store_path": "/nix/store/gbp4nbk8gcwh4ksf3bzhz4izib6ai3c1-python3.12-pyelftools-0.32"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/8naxgp9fyjkjl6wh8wk9nnappc3zz8bw-python3.12-pyelftools-0.32",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/vx997gk2qqdfvfk1rx49f7lcnj97fvkn-python3.12-pyelftools-0.32-dist"
+            }
+          ],
+          "store_path": "/nix/store/8naxgp9fyjkjl6wh8wk9nnappc3zz8bw-python3.12-pyelftools-0.32"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ndcl6h0ip9xh6lrb0pg35m0klgpf5k1d-python3.12-pyelftools-0.32",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/hikva2ybmvd2lifcmj9iimgv8fdyx0i5-python3.12-pyelftools-0.32-dist"
+            }
+          ],
+          "store_path": "/nix/store/ndcl6h0ip9xh6lrb0pg35m0klgpf5k1d-python3.12-pyelftools-0.32"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/iz6pfpk397x3m0hrjbb3mjszq4kvxjp3-python3.12-pyelftools-0.32",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/v7m3pcx5gr46x2bpyf56j0krbnpc789f-python3.12-pyelftools-0.32-dist"
+            }
+          ],
+          "store_path": "/nix/store/iz6pfpk397x3m0hrjbb3mjszq4kvxjp3-python3.12-pyelftools-0.32"
+        }
+      }
+    },
+    "python312Packages.setuptools@latest": {
+      "last_modified": "2025-11-23T21:50:36Z",
+      "resolved": "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261#python312Packages.setuptools",
+      "source": "devbox-search",
+      "version": "80.9.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/zxih5r5zy3inbdnsbvgl7krz4qs5r7xa-python3.12-setuptools-80.9.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/zaalwhdcz81vhagpj37vwyzr2ybx3n51-python3.12-setuptools-80.9.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/zxih5r5zy3inbdnsbvgl7krz4qs5r7xa-python3.12-setuptools-80.9.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/kipl395flwad1dxci6c2vrcggsgfrqx7-python3.12-setuptools-80.9.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/r67z46n3is3zrsc8wdys0qdplxbrg7y4-python3.12-setuptools-80.9.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/kipl395flwad1dxci6c2vrcggsgfrqx7-python3.12-setuptools-80.9.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/dc51vn96p55b9xdz459bix681264r8mh-python3.12-setuptools-80.9.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/m1nvcjqxa0vrxx3r9ql1gq4yys5gg9g4-python3.12-setuptools-80.9.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/dc51vn96p55b9xdz459bix681264r8mh-python3.12-setuptools-80.9.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/l5qqglfwhf8dhg5602w79ggrv7mci6yl-python3.12-setuptools-80.9.0",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/il6x1klfbipy63cfkln9yb9q1z4axh0k-python3.12-setuptools-80.9.0-dist"
+            }
+          ],
+          "store_path": "/nix/store/l5qqglfwhf8dhg5602w79ggrv7mci6yl-python3.12-setuptools-80.9.0"
+        }
+      }
+    },
+    "python312Packages.west": {
+      "resolved": "github:NixOS/nixpkgs/608d0cadfed240589a7eea422407a547ad626a14?narHash=sha256-M0yS4AafhKxPPmOHGqIV0iKxgNO8bHDWdl1kOwGBwRY%3D#python312Packages.west",
+      "source": "nixpkg",
+      "systems": {
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "path": "/nix/store/r3dc8j2w9pkdska1vf1bdd3hwjnmmsrf-python3.12-west-1.5.0",
+              "default": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}
