@@ -2,22 +2,30 @@ help:
 	@echo "Make targets:"
 	@grep '^[^#[:space:]].*:' Makefile | grep -v ^.PHONY | sed 's/\(.*\):.*/  \1/g'
 
-build_kyria: build_kyria_left .WAIT build_kyria_right
+KYRIA_DONGLE_BOARD ?= nice_nano_v2
+KYRIA_DONGLE_MOUNT ?= /run/media/pbogut/NICENANO
+
+build_kyria: build_kyria_left .WAIT build_kyria_right .WAIT build_kyria_dongle
 
 build_kyria_left:
 	@mkdir -p ./build/artifacts
-	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_left nice_view_adapter nice_view" && \
-	cp build/zephyr/zmk.uf2 kyria_left-nice_nano_v2-zmk.uf2
+	west build --pristine -d build/kyria_left -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_left" && \
+	cp build/kyria_left/zephyr/zmk.uf2 kyria_left-nice_nano_v2-zmk.uf2
 
 build_kyria_right:
 	@mkdir -p ./build/artifacts
-	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_right nice_view_adapter nice_view" && \
-	cp build/zephyr/zmk.uf2 kyria_right-nice_nano_v2-zmk.uf2
+	west build --pristine -d build/kyria_right -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_right" && \
+	cp build/kyria_right/zephyr/zmk.uf2 kyria_right-nice_nano_v2-zmk.uf2
+
+build_kyria_dongle:
+	@mkdir -p ./build/artifacts
+	west build --pristine -d build/kyria_dongle -s zmk/app -b "$(KYRIA_DONGLE_BOARD)" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_dongle" && \
+	cp build/kyria_dongle/zephyr/zmk.uf2 kyria_dongle-$(KYRIA_DONGLE_BOARD)-zmk.uf2
 
 build_kyria_settings_reset:
 	@mkdir -p ./build/artifacts
-	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" && \
-	cp build/zephyr/zmk.uf2 kyria_settings_reset-nice_nano_v2-zmk.uf2
+	west build --pristine -d build/kyria_settings_reset -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" && \
+	cp build/kyria_settings_reset/zephyr/zmk.uf2 kyria_settings_reset-nice_nano_v2-zmk.uf2
 
 build_dactyl_gaming:
 	@mkdir -p ./build/artifacts
@@ -29,23 +37,31 @@ build_dactyl_gaming_settings_reset:
 	west build --pristine -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="settings_reset" -DZMK_EXTRA_MODULES="${PWD}/custom_modules/pbogut" && \
 	cp build/zephyr/zmk.uf2 dactyl_gaming_settings_reset-nice_nano_v2-zmk.uf2
 
-copy_kyria: copy_kyria_left .WAIT copy_kyria_right
+copy_kyria: copy_kyria_left .WAIT copy_kyria_right .WAIT copy_kyria_dongle
 
 copy_kyria_left:
 	@while ! cp ./kyria_left-nice_nano_v2-zmk.uf2 /run/media/pbogut/NICENANO/ 2> /dev/null; do \
 		echo "Waiting for device [kyria_left] ..."; \
 		sleep 1s; \
 	done
+	@while mountpoint -q /run/media/pbogut/NICENANO; do sleep 1s; done
 
 copy_kyria_right:
 	@while ! cp ./kyria_right-nice_nano_v2-zmk.uf2 /run/media/pbogut/NICENANO/ 2> /dev/null; do \
 		echo "Waiting for device [kyria_right] ..."; \
 		sleep 1s; \
 	done
+	@while mountpoint -q /run/media/pbogut/NICENANO; do sleep 1s; done
 
 copy_kyria_settings_reset:
 	@while ! cp ./kyria_settings_reset-nice_nano_v2-zmk.uf2 /run/media/pbogut/NICENANO/ 2> /dev/null; do \
 		echo "Waiting for device [kyria] ..."; \
+		sleep 1s; \
+	done
+
+copy_kyria_dongle:
+	@while ! cp ./kyria_dongle-$(KYRIA_DONGLE_BOARD)-zmk.uf2 "$(KYRIA_DONGLE_MOUNT)/" 2> /dev/null; do \
+		echo "Waiting for device [kyria_dongle] ..."; \
 		sleep 1s; \
 	done
 
@@ -120,9 +136,10 @@ pyenv:
 pip_install:
 	pip install -r requirements.txt
 
-flash_kyria: build_kyria_left .WAIT build_kyria_right .WAIT copy_kyria_left .WAIT copy_kyria_right
+flash_kyria: build_kyria .WAIT copy_kyria
 flash_kyria_left: build_kyria_left .WAIT copy_kyria_left
 flash_kyria_right: build_kyria_right .WAIT copy_kyria_right
+flash_kyria_dongle: build_kyria_dongle .WAIT copy_kyria_dongle
 flash_eql60: build_eql60 .WAIT copy_eql60
 flash_eql60_nn: build_eql60_nn .WAIT copy_eql60_nn
 

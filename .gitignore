@@ -1,5 +1,6 @@
 /.pyenv/
 /.ccls-cache/
+/.cache/
 /.west/
 /bootloader/
 /build/

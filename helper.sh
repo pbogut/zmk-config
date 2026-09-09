@@ -24,6 +24,7 @@ usage() {
     echo "Options:"
     echo "  --left               perform action for left half"
     echo "  --right              perform action for right half"
+    echo "  --dongle             perform action for Kyria dongle"
     echo "  -h, --help           display this help and exit"
 }
 
@@ -35,6 +36,10 @@ while test $# -gt 0; do
             ;;
         --right)
             half="right"
+            shift
+            ;;
+        --dongle)
+            half="dongle"
             shift
             ;;
         deps)
@@ -113,24 +118,10 @@ if [[ $action == "copy" ]]; then
     fi
     case "$kb" in
         "kyria")
-            if [[ $half == "both" ]] || [[ $half == "left" ]]; then
-                while ! cp ./kyria_left-nice_nano_v2-zmk.uf2 /run/media/pbogut/NICENANO/ 2> /dev/null; do
-                    echo "Waiting for device [left] ..."
-                    sleep 1s
-                done
-                echo "Done"
-            fi
-
             if [[ $half == "both" ]]; then
-                sleep 2s
-            fi
-
-            if [[ $half == "both" ]] || [[ $half == "right" ]]; then
-                while ! cp ./kyria_right-nice_nano_v2-zmk.uf2 /run/media/pbogut/NICENANO/ 2> /dev/null; do
-                    echo "Waiting for device [right] ..."
-                    sleep 1s
-                done
-                echo "Done"
+                make copy_kyria
+            else
+                make "copy_kyria_${half}"
             fi
             ;;
         "dactyl_gaming")
@@ -149,18 +140,10 @@ if [[ $action == "build" ]]; then
     fi
     case "$kb" in
         "kyria")
-            if [[ $half == "both" ]] || [[ $half == "left" ]]; then
-                rm build -fr
-                mkdir -p ./build/artifacts
-                west build -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="$PWD/config" -DSHIELD="kyria_left nice_view_adapter nice_view" &&
-                    cp build/zephyr/zmk.uf2 kyria_left-nice_nano_v2-zmk.uf2
-            fi
-            if [[ $half == "both" ]] || [[ $half == "right" ]]; then
-                rm build -fr
-                mkdir -p ./build/artifacts
-                west build -s zmk/app -b "nice_nano_v2" -- -DZMK_CONFIG="$PWD/config" -DSHIELD="kyria_right nice_view_adapter nice_view" &&
-                    cp build/zephyr/zmk.uf2 kyria_right-nice_nano_v2-zmk.uf2
-
+            if [[ $half == "both" ]]; then
+                make build_kyria
+            else
+                make "build_kyria_${half}"
             fi
             ;;
         "dactyl_gaming")
