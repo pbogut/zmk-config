@@ -1,14 +1,26 @@
 {
   "packages": [
+    "cmake@3.31.7",
+    "ninja@latest",
+    "dtc@latest",
+    "gnumake@4.4.1",
+    "git@latest",
     "python312",
     "python312Packages.west",
     "python312Packages.pip",
     "github:nix-community/zephyr-nix#sdkFull-0_16",
     "python312Packages.pyelftools@latest",
     "python312Packages.protobuf@latest",
-    "python312Packages.setuptools@latest"
+    "python312Packages.setuptools@latest",
+    "python312Packages.intelhex"
   ],
+  "env": {
+    "ZEPHYR_TOOLCHAIN_VARIANT": "zephyr",
+    "ZEPHYR_BASE": "$DEVBOX_PROJECT_ROOT/zephyr"
+  },
   "shell": {
-    "init_hook": []
+    "init_hook": [
+      "if [ ! -d \"$DEVBOX_PROJECT_ROOT/zmk/app\" ] || [ ! -d \"$DEVBOX_PROJECT_ROOT/zephyr\" ]; then make -C \"$DEVBOX_PROJECT_ROOT\" init; fi"
+    ]
   }
 }

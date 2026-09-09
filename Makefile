@@ -95,7 +95,9 @@ copy_eql60_nn:
 	done
 
 patch:
-	git -C "${PWD}/zmk" apply  < "${PWD}/patch/nice_view_battery_percentage.patch"
+	@if ! git -C "${CURDIR}/zmk" apply --reverse --check "${CURDIR}/patch/nice_view_battery_percentage.patch" 2>/dev/null; then \
+		git -C "${CURDIR}/zmk" apply "${CURDIR}/patch/nice_view_battery_percentage.patch"; \
+	fi
 
 update:
 	git -C "${PWD}/zmk" apply -R < "${PWD}/patch/nice_view_battery_percentage.patch"; \
@@ -104,9 +106,12 @@ update:
 	git -C "${PWD}/zmk" apply < "${PWD}/patch/nice_view_battery_percentage.patch";
 
 init:
-	west init -l config; \
-	west update; \
-	west zephyr-export;
+	@test -f .west/config || west init -l config
+	west update
+	west zephyr-export
+	$(MAKE) patch
+
+.PHONY: init patch
 
 pyenv:
 	python -m venv "${PWD}/.pyenv"
