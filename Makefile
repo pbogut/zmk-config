@@ -43,7 +43,7 @@ copy_kyria_right:
 		sleep 1s; \
 	done
 
-copy_kyria_gaming_settings_reset:
+copy_kyria_settings_reset:
 	@while ! cp ./kyria_settings_reset-nice_nano_v2-zmk.uf2 /run/media/pbogut/NICENANO/ 2> /dev/null; do \
 		echo "Waiting for device [kyria] ..."; \
 		sleep 1s; \
