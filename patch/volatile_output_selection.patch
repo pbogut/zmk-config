@@ -1,0 +1,125 @@
+diff --git a/app/Kconfig b/app/Kconfig
+index 4a68cce0..b71c6bb4 100644
+--- a/app/Kconfig
++++ b/app/Kconfig
+@@ -606,6 +606,23 @@ endmenu # Logging
+ 
+ if SETTINGS
+ 
++config ZMK_OUTPUT_SELECTION_PERSISTENCE
++    bool "Save and restore the preferred output transport"
++    default y
++    help
++      Disable to keep USB/BLE output selection in RAM only. On boot, use
++      the default output preference and ignore previously saved selections.
++      Other settings, including Bluetooth bonds, are unaffected.
++
++config ZMK_BLE_PROFILE_SELECTION_PERSISTENCE
++    bool "Save and restore the active Bluetooth profile index"
++    depends on ZMK_BLE
++    default y
++    help
++      Disable to keep the active profile index in RAM only and start at
++      profile 0 on every boot. Pairing information for all host profiles
++      and split peripherals is still saved and restored.
++
+ config ZMK_SETTINGS_RESET_ON_START
+     bool "Delete all persistent settings when the keyboard boots"
+ 
+diff --git a/app/src/ble.c b/app/src/ble.c
+index e7a25b09..e9a240bf 100644
+--- a/app/src/ble.c
++++ b/app/src/ble.c
+@@ -250,7 +250,7 @@ int zmk_ble_profile_index(const bt_addr_le_t *addr) {
+     return -ENODEV;
+ }
+ 
+-#if IS_ENABLED(CONFIG_SETTINGS)
++#if IS_ENABLED(CONFIG_ZMK_BLE_PROFILE_SELECTION_PERSISTENCE)
+ static void ble_save_profile_work(struct k_work *work) {
+     settings_save_one("ble/active_profile", &active_profile, sizeof(active_profile));
+ }
+@@ -259,7 +259,7 @@ static struct k_work_delayable ble_save_work;
+ #endif
+ 
+ static int ble_save_profile(void) {
+-#if IS_ENABLED(CONFIG_SETTINGS)
++#if IS_ENABLED(CONFIG_ZMK_BLE_PROFILE_SELECTION_PERSISTENCE)
+     return k_work_reschedule(&ble_save_work, K_MSEC(CONFIG_ZMK_SETTINGS_SAVE_DEBOUNCE));
+ #else
+     return 0;
+@@ -436,6 +436,7 @@ static int ble_profiles_handle_set(const char *name, size_t len, settings_read_c
+ 
+         LOG_DBG("Loaded %s address for profile %d", addr_str, idx);
+     } else if (settings_name_steq(name, "active_profile", &next) && !next) {
++#if IS_ENABLED(CONFIG_ZMK_BLE_PROFILE_SELECTION_PERSISTENCE)
+         if (len != sizeof(active_profile)) {
+             return -EINVAL;
+         }
+@@ -445,6 +446,7 @@ static int ble_profiles_handle_set(const char *name, size_t len, settings_read_c
+             LOG_ERR("Failed to handle active profile from settings (err %d)", err);
+             return err;
+         }
++#endif
+     }
+ #if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE) && IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+     else if (settings_name_steq(name, "peripheral_addresses", &next) && next) {
+@@ -721,7 +723,9 @@ static int zmk_ble_init(void) {
+ 
+ #if IS_ENABLED(CONFIG_SETTINGS)
+     settings_register(&profiles_handler);
++#if IS_ENABLED(CONFIG_ZMK_BLE_PROFILE_SELECTION_PERSISTENCE)
+     k_work_init_delayable(&ble_save_work, ble_save_profile_work);
++#endif
+ #else
+     zmk_ble_complete_startup();
+ #endif
+diff --git a/app/src/endpoints.c b/app/src/endpoints.c
+index ae0e5e7f..77d841a2 100644
+--- a/app/src/endpoints.c
++++ b/app/src/endpoints.c
+@@ -32,7 +32,7 @@ static enum zmk_transport preferred_transport =
+ 
+ static void update_current_endpoint(void);
+ 
+-#if IS_ENABLED(CONFIG_SETTINGS)
++#if IS_ENABLED(CONFIG_ZMK_OUTPUT_SELECTION_PERSISTENCE)
+ static void endpoints_save_preferred_work(struct k_work *work) {
+     settings_save_one("endpoints/preferred", &preferred_transport, sizeof(preferred_transport));
+ }
+@@ -41,7 +41,7 @@ static struct k_work_delayable endpoints_save_work;
+ #endif
+ 
+ static int endpoints_save_preferred(void) {
+-#if IS_ENABLED(CONFIG_SETTINGS)
++#if IS_ENABLED(CONFIG_ZMK_OUTPUT_SELECTION_PERSISTENCE)
+     return k_work_reschedule(&endpoints_save_work, K_MSEC(CONFIG_ZMK_SETTINGS_SAVE_DEBOUNCE));
+ #else
+     return 0;
+@@ -237,7 +237,7 @@ int zmk_endpoints_send_mouse_report() {
+ }
+ #endif // IS_ENABLED(CONFIG_ZMK_POINTING)
+ 
+-#if IS_ENABLED(CONFIG_SETTINGS)
++#if IS_ENABLED(CONFIG_ZMK_OUTPUT_SELECTION_PERSISTENCE)
+ 
+ static int endpoints_handle_set(const char *name, size_t len, settings_read_cb read_cb,
+                                 void *cb_arg) {
+@@ -263,7 +263,7 @@ static int endpoints_handle_set(const char *name, size_t len, settings_read_cb r
+ 
+ SETTINGS_STATIC_HANDLER_DEFINE(endpoints, "endpoints", NULL, endpoints_handle_set, NULL, NULL);
+ 
+-#endif /* IS_ENABLED(CONFIG_SETTINGS) */
++#endif /* IS_ENABLED(CONFIG_ZMK_OUTPUT_SELECTION_PERSISTENCE) */
+ 
+ static bool is_usb_ready(void) {
+ #if IS_ENABLED(CONFIG_ZMK_USB)
+@@ -320,7 +320,7 @@ static struct zmk_endpoint_instance get_selected_instance(void) {
+ }
+ 
+ static int zmk_endpoints_init(void) {
+-#if IS_ENABLED(CONFIG_SETTINGS)
++#if IS_ENABLED(CONFIG_ZMK_OUTPUT_SELECTION_PERSISTENCE)
+     k_work_init_delayable(&endpoints_save_work, endpoints_save_preferred_work);
+ #endif
+ 

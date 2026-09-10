@@ -4,6 +4,10 @@ help:
 
 KYRIA_DONGLE_BOARD ?= nice_nano_v2
 KYRIA_DONGLE_MOUNT ?= /run/media/pbogut/NICENANO
+ZMK_DIR ?= $(CURDIR)/zmk
+ZMK_PATCHES := nice_view_battery_percentage.patch volatile_output_selection.patch
+
+build_kyria_left build_kyria_right build_kyria_dongle build_kyria_settings_reset: | patch
 
 build_kyria: build_kyria_left .WAIT build_kyria_right .WAIT build_kyria_dongle
 
@@ -111,23 +115,43 @@ copy_eql60_nn:
 	done
 
 patch:
-	@if ! git -C "${CURDIR}/zmk" apply --reverse --check "${CURDIR}/patch/nice_view_battery_percentage.patch" 2>/dev/null; then \
-		git -C "${CURDIR}/zmk" apply "${CURDIR}/patch/nice_view_battery_percentage.patch"; \
-	fi
+	@set -e; for name in $(ZMK_PATCHES); do \
+		patch="$(CURDIR)/patch/$$name"; \
+		if git -C "$(ZMK_DIR)" apply --reverse --check "$$patch" 2>/dev/null; then \
+			echo "Already applied: $$name"; \
+		else \
+			echo "Applying: $$name"; \
+			git -C "$(ZMK_DIR)" apply --check "$$patch"; \
+			git -C "$(ZMK_DIR)" apply "$$patch"; \
+		fi; \
+	done
+
+unpatch:
+	@set -e; for name in $(ZMK_PATCHES); do \
+		patch="$(CURDIR)/patch/$$name"; \
+		if git -C "$(ZMK_DIR)" apply --reverse --check "$$patch" 2>/dev/null; then \
+			echo "Reverting: $$name"; \
+			git -C "$(ZMK_DIR)" apply --reverse "$$patch"; \
+		else \
+			echo "Checking unapplied patch: $$name"; \
+			git -C "$(ZMK_DIR)" apply --check "$$patch"; \
+		fi; \
+	done
 
 update:
-	git -C "${PWD}/zmk" apply -R < "${PWD}/patch/nice_view_battery_percentage.patch"; \
-	west update; \
-	west zephyr-export; \
-	git -C "${PWD}/zmk" apply < "${PWD}/patch/nice_view_battery_percentage.patch";
-
-init:
-	@test -f .west/config || west init -l config
+	$(MAKE) unpatch
 	west update
 	west zephyr-export
 	$(MAKE) patch
 
-.PHONY: init patch
+init:
+	@test -f .west/config || west init -l config
+	@if test -e "$(ZMK_DIR)/.git"; then $(MAKE) unpatch; fi
+	west update
+	west zephyr-export
+	$(MAKE) patch
+
+.PHONY: init update patch unpatch
 
 pyenv:
 	python -m venv "${PWD}/.pyenv"

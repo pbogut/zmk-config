@@ -90,21 +90,10 @@ if [[ $action == "deps" ]]; then
     paru -S python-west zephyr-sdk
 fi
 
-if [[ $action == "init" ]]; then
-    if [[ -d "$dir/zmk" ]]; then
-        git -C "$dir/zmk" reset --hard
-    fi
-    west init -l config
-    west update
-    west zephyr-export
+if [[ $action == "init" ]] || [[ $action == "update" ]]; then
+    make "$action" || exit $?
     cp "$dir/config/logo.c" "$dir/zmk/app/boards/shields/nice_view/widgets/art.c"
-    git -C "$dir/zmk" apply < "$dir/patch/nice_view_battery_percentage.patch"
-fi
-
-if [[ $action == "update" ]]; then
-    west update
-    cp "$dir/config/logo.c" "$dir/zmk/app/boards/shields/nice_view/widgets/art.c"
-    git -C "$dir/zmk" apply < "$dir/patch/nice_view_battery_percentage.patch"
+    exit $?
 fi
 
 if [[ $action == "cleanup" ]]; then

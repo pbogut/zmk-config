@@ -100,9 +100,65 @@ Bluetooth settings. Then select Bluetooth output. To type on the desktop again,
 select USB output. Selecting a Bluetooth profile alone does not switch output
 away from USB while the dongle is plugged into the desktop.
 
-USB is the initial preferred output. ZMK saves changes to that preference, so
-use the explicit USB/Bluetooth keys if the output after a restart is unexpected.
-The dongle sends keystrokes to one selected output at a time.
+The dongle starts with USB preferred and Bluetooth profile 0 selected on every
+boot. Output toggles and profile changes stay in RAM and do not write to flash.
+Laptop and split pairings are still saved. Previously saved output/profile
+selections are ignored, so installing this firmware needs no settings reset.
+
+The dongle sends keystrokes to one selected output at a time. If the selected
+Bluetooth profile is disconnected, ZMK falls back to USB even with Bluetooth
+preferred. A laptop can remain connected on a profile that is not selected;
+use ZMK + Q followed by ZMK + `.` to return to the laptop on profile 0.
+
+## Local ZMK patches
+
+`patch/volatile_output_selection.patch` adds two options to ZMK. They default to
+`y`, preserving upstream behavior for other keyboards. The dongle disables both
+in `config/kyria_dongle.conf`:
+
+```ini
+CONFIG_ZMK_OUTPUT_SELECTION_PERSISTENCE=n
+CONFIG_ZMK_BLE_PROFILE_SELECTION_PERSISTENCE=n
+```
+
+Apply the patches to an existing checkout and build the dongle:
+
+```sh
+devbox run -- make patch
+devbox run -- make build_kyria_dongle
+```
+
+`make patch` also applies the existing nice!view patch and skips patches already
+applied. Kyria build targets run it automatically. `make init` applies both after
+fetching a fresh workspace. `make update` removes applied patches, updates ZMK,
+then reapplies them. `helper.sh init` and `helper.sh update` use these same targets.
+GitHub Actions applies both patches before compiling too.
+
+To run `west update` manually, use this order inside your build environment:
+
+```sh
+make unpatch
+west update
+west zephyr-export
+make patch
+```
+
+To apply only the selection patch manually, from the repository root:
+
+```sh
+git -C zmk apply "$PWD/patch/volatile_output_selection.patch"
+```
+
+The patches target the revision in `config/west.yml`. If an upstream update
+changes the affected code, patch application stops with an error so the patch
+can be adjusted. Newer Zephyr versions provide `west patch`, but the Zephyr
+checkout used here does not include that extension.
+
+To check the new behavior on hardware, select Bluetooth and another profile,
+wait more than 60 seconds, then power-cycle the dongle. It should use USB and
+profile 0 again, and the halves and laptop should retain their pairings. Only
+the dongle needs reflashing for this patch. USB reconnection without a power
+cycle, such as with a battery-powered dongle, does not reset the selections.
 
 ## Updating the keymap
 
