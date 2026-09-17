@@ -1,0 +1,4 @@
+name: battery_usb
+build:
+  cmake: .
+  kconfig: Kconfig

@@ -43,7 +43,8 @@ jobs:
       - name: Build firmware
         run: |
           west build -s zmk/app -d build -b "$BOARD" -- \
-            -DZMK_CONFIG="$GITHUB_WORKSPACE/config" -DSHIELD="$SHIELD"
+            -DZMK_CONFIG="$GITHUB_WORKSPACE/config" -DSHIELD="$SHIELD" \
+            -DZMK_EXTRA_MODULES="$GITHUB_WORKSPACE/custom_modules/battery_usb"
       - name: Prepare artifact
         id: artifact
         shell: bash

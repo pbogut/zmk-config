@@ -23,7 +23,7 @@ build_kyria_right:
 
 build_kyria_dongle:
 	@mkdir -p ./build/artifacts
-	west build --pristine -d build/kyria_dongle -s zmk/app -b "$(KYRIA_DONGLE_BOARD)" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_dongle" && \
+	west build --pristine -d build/kyria_dongle -s zmk/app -b "$(KYRIA_DONGLE_BOARD)" -- -DZMK_CONFIG="${PWD}/config" -DSHIELD="kyria_dongle" -DZMK_EXTRA_MODULES="${PWD}/custom_modules/battery_usb" && \
 	cp build/kyria_dongle/zephyr/zmk.uf2 kyria_dongle-$(KYRIA_DONGLE_BOARD)-zmk.uf2
 
 build_kyria_settings_reset:

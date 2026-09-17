@@ -110,6 +110,82 @@ Bluetooth profile is disconnected, ZMK falls back to USB even with Bluetooth
 preferred. A laptop can remain connected on a profile that is not selected;
 use ZMK + Q followed by ZMK + `.` to return to the laptop on profile 0.
 
+## Battery levels over USB
+
+The dongle exposes a dedicated USB CDC ACM serial port with both halves' battery
+percentages. `custom_modules/battery_usb` implements this, enabled by
+`CONFIG_ZMK_BATTERY_USB=y` in `config/kyria_dongle.conf`. The option also enables
+ZMK's peripheral battery fetching. The Makefile and GitHub Actions load the module.
+
+Build and flash only the dongle:
+
+```sh
+devbox run -- make build_kyria_dongle
+```
+
+Double-tap the dongle's reset button, then copy
+`kyria_dongle-nice_nano_v2-zmk.uf2` to its `NICENANO` drive, or run
+`make copy_kyria_dongle`. No settings reset or half reflash is needed.
+
+### Reading on Linux
+
+The serial port appears as `/dev/ttyACM*`. Find the dongle's stable device path:
+
+```sh
+ls -l /dev/serial/by-id/
+```
+
+Use that path below. This command streams one JSON object per line using `jq`:
+
+```sh
+port=/dev/serial/by-id/usb-REPLACE_WITH_YOUR_DONGLE
+stty -F "$port" 115200 raw -echo -ixon -ixoff -crtscts clocal
+jq --unbuffered -Rrc 'fromjson? | select(type == "object" and has("peripherals"))' < "$port"
+```
+
+The baud rate does not control USB transfer speed. The reader must assert DTR,
+which normal Linux serial opens do. For permission errors, grant your user serial
+access through your distribution's serial-device group, commonly `dialout` or
+`uucp`, or a device-specific udev rule. Reopen the reader after unplugging the
+dongle, using the same `/dev/serial/by-id/` path.
+
+Example output:
+
+```json
+{"peripherals":[{"slot":0,"percent":82},{"slot":1,"percent":67}]}
+```
+
+- A snapshot arrives within about one second of detecting an open port, then
+  every five seconds while it remains open and USB is active.
+- `percent` is an integer from 0 to 100, or `null` until the slot has received a
+  battery event since the dongle booted.
+- The pinned ZMK version sends `0` when a half disconnects. That is indistinguishable
+  from a real 0% reading in its battery events. A reconnect refreshes the reading.
+- These are cached values. Repeating them over USB does not poll the halves again.
+  The halves retain their existing 60-second active sampling interval and notify
+  the dongle when the percentage changes.
+- Blank lines separate snapshots. The stream is best-effort: a stalled reader
+  can cause the bounded USB buffer to discard bytes. Ignore blank or malformed
+  lines and resume at the next complete JSON object, as the command above does.
+
+The port carries battery data only. It also works while the dongle sends keyboard
+output to its Bluetooth host, provided USB remains connected to the Linux computer.
+
+### Identifying left and right
+
+Slots follow saved pairing order, not physical side. To identify them, turn both
+halves off, restart the dongle, then power on only the left half. The slot that
+changes from `null` to a number is left. Power on the right half to confirm the
+other slot, and use that mapping in your reader.
+
+The mapping survives half and dongle reboots, reconnect order changes, and normal
+firmware updates. Clearing the dongle's split pairing settings and pairing again
+can change it.
+
+To check on hardware after flashing, verify readings with each half powered in
+turn, open the reader after the keyboard has already connected, and unplug and
+reconnect USB. Check typing and encoders with the reader open and closed.
+
 ## Local ZMK patches
 
 `patch/volatile_output_selection.patch` adds two options to ZMK. They default to
