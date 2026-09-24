@@ -1,0 +1,11 @@
+config ZMK_BATTERY_USB
+    bool "Report split battery levels over USB serial"
+    depends on ZMK_USB && ZMK_SPLIT_BLE && ZMK_SPLIT_ROLE_CENTRAL
+    select ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
+    select SERIAL
+    select UART_INTERRUPT_DRIVEN
+    select UART_LINE_CTRL
+    select USB_CDC_ACM
+    help
+      Write battery snapshots to a dedicated USB CDC ACM interface.
+      Requires a CDC ACM node labeled battery_usb_uart.
