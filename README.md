@@ -92,7 +92,7 @@ ZMK layer. Key names below refer to their positions on the base layer:
 | Select laptop Bluetooth profile 0 | Hold ZMK, press Q |
 | Send output over Bluetooth | Hold ZMK, press `.` |
 | Send output over USB | Hold ZMK, press `,` |
-| Toggle USB/Bluetooth preference | Hold ZMK, press M |
+| Toggle USB/Bluetooth output | Hold ZMK, press M |
 | Clear the selected host Bluetooth profile | Hold ZMK, press F |
 
 To pair the laptop, select profile 0 and add **Kyria Dongle** in the laptop's
@@ -100,15 +100,22 @@ Bluetooth settings. Then select Bluetooth output. To type on the desktop again,
 select USB output. Selecting a Bluetooth profile alone does not switch output
 away from USB while the dongle is plugged into the desktop.
 
-The dongle starts with USB preferred and Bluetooth profile 0 selected on every
+The dongle starts with USB output and Bluetooth profile 0 selected on every
 boot. Output toggles and profile changes stay in RAM and do not write to flash.
 Laptop and split pairings are still saved. Previously saved output/profile
 selections are ignored, so installing this firmware needs no settings reset.
 
-The dongle sends keystrokes to one selected output at a time. If the selected
-Bluetooth profile is disconnected, ZMK falls back to USB even with Bluetooth
-preferred. A laptop can remain connected on a profile that is not selected;
-use ZMK + Q followed by ZMK + `.` to return to the laptop on profile 0.
+Output selection is strict. Selecting Bluetooth sends input only to the selected
+Bluetooth profile. If that profile is disconnected, typing and volume encoder
+input go nowhere, even while USB is connected to the desktop. Selecting USB
+likewise never falls back to Bluetooth if USB is unavailable. The output keys
+still work when the selected host is disconnected.
+
+Bluetooth reports generated while the selected profile is disconnected are
+dropped before entering the send queue. Reconnecting that profile allows new
+input without replaying completed keystrokes typed while disconnected. A laptop
+can remain connected on a profile that is not selected; use ZMK + Q followed by
+ZMK + `.` to return to the laptop on profile 0.
 
 ## Battery levels over USB
 
@@ -197,6 +204,11 @@ CONFIG_ZMK_OUTPUT_SELECTION_PERSISTENCE=n
 CONFIG_ZMK_BLE_PROFILE_SELECTION_PERSISTENCE=n
 ```
 
+`patch/strict_output_selection.patch` adds `CONFIG_ZMK_OUTPUT_FALLBACK`, enabled
+by default when both USB and Bluetooth are supported. The dongle sets it to `n`
+in `config/kyria_dongle.conf` to disable automatic output switching when a host
+disconnects. This applies to keyboard, consumer/media, and mouse reports.
+
 Apply the patches to an existing checkout and build the dongle:
 
 ```sh
@@ -205,10 +217,10 @@ devbox run -- make build_kyria_dongle
 ```
 
 `make patch` also applies the existing nice!view patch and skips patches already
-applied. Kyria build targets run it automatically. `make init` applies both after
+applied. Kyria build targets run it automatically. `make init` applies all patches after
 fetching a fresh workspace. `make update` removes applied patches, updates ZMK,
 then reapplies them. `helper.sh init` and `helper.sh update` use these same targets.
-GitHub Actions applies both patches before compiling too.
+GitHub Actions applies all patches before compiling too.
 
 To run `west update` manually, use this order inside your build environment:
 
@@ -219,7 +231,7 @@ west zephyr-export
 make patch
 ```
 
-To apply only the selection patch manually, from the repository root:
+To apply only the persistence patch manually, from the repository root:
 
 ```sh
 git -C zmk apply "$PWD/patch/volatile_output_selection.patch"
@@ -235,6 +247,23 @@ wait more than 60 seconds, then power-cycle the dongle. It should use USB and
 profile 0 again, and the halves and laptop should retain their pairings. Only
 the dongle needs reflashing for this patch. USB reconnection without a power
 cycle, such as with a battery-powered dongle, does not reset the selections.
+
+To verify strict output selection after flashing the dongle:
+
+1. Keep USB connected to the desktop, disconnect the laptop's Bluetooth, and
+   select Bluetooth output. Type and turn the volume encoders. The desktop
+   must receive no input.
+2. Reconnect the laptop. New input should reach it without replaying completed
+   keystrokes typed while disconnected. Disconnect it again and confirm input
+   stops rather than moving to the desktop.
+3. Select USB explicitly and confirm typing reaches the desktop again. Also
+   switch outputs with a held modifier and check that it does not stay stuck
+   on the previous host.
+4. If the dongle can stay powered without USB data, select USB, make USB
+   unavailable, and leave Bluetooth connected. Input must not move to Bluetooth.
+
+Flash `kyria_dongle-nice_nano_v2-zmk.uf2` onto the dongle to install this change.
+No half reflash or settings reset is needed.
 
 ## Updating the keymap
 

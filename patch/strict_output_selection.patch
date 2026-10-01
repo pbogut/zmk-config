@@ -1,0 +1,67 @@
+diff --git a/app/Kconfig b/app/Kconfig
+--- a/app/Kconfig
++++ b/app/Kconfig
+@@ -498,6 +498,15 @@ endif # ZMK_BLE || ZMK_SPLIT_BLE
+ 
+ endmenu # Initialization Priorities
+ 
++config ZMK_OUTPUT_FALLBACK
++    bool "Fall back to another connected output transport"
++    depends on ZMK_USB && ZMK_BLE
++    default y
++    help
++      Disable to use only the explicitly selected USB/BLE transport, even
++      when it is disconnected. Input is not redirected to another host.
++      Bluetooth reports generated while disconnected are dropped.
++
+ config ZMK_PHYSICAL_LAYOUT_KEY_ROTATION
+     bool "Support rotation of keys in physical layouts"
+     default y
+diff --git a/app/src/endpoints.c b/app/src/endpoints.c
+--- a/app/src/endpoints.c
++++ b/app/src/endpoints.c
+@@ -135,6 +135,10 @@ static int send_keyboard_report(void) {
+ 
+     case ZMK_TRANSPORT_BLE: {
+ #if IS_ENABLED(CONFIG_ZMK_BLE)
++        if (IS_ENABLED(CONFIG_ZMK_USB) && !IS_ENABLED(CONFIG_ZMK_OUTPUT_FALLBACK) &&
++            !zmk_ble_active_profile_is_connected()) {
++            return -ENOTCONN;
++        }
+         struct zmk_hid_keyboard_report *keyboard_report = zmk_hid_get_keyboard_report();
+         int err = zmk_hog_send_keyboard_report(&keyboard_report->body);
+         if (err) {
+@@ -169,6 +173,10 @@ static int send_consumer_report(void) {
+ 
+     case ZMK_TRANSPORT_BLE: {
+ #if IS_ENABLED(CONFIG_ZMK_BLE)
++        if (IS_ENABLED(CONFIG_ZMK_USB) && !IS_ENABLED(CONFIG_ZMK_OUTPUT_FALLBACK) &&
++            !zmk_ble_active_profile_is_connected()) {
++            return -ENOTCONN;
++        }
+         struct zmk_hid_consumer_report *consumer_report = zmk_hid_get_consumer_report();
+         int err = zmk_hog_send_consumer_report(&consumer_report->body);
+         if (err) {
+@@ -219,6 +227,10 @@ int zmk_endpoints_send_mouse_report() {
+ 
+     case ZMK_TRANSPORT_BLE: {
+ #if IS_ENABLED(CONFIG_ZMK_BLE)
++        if (IS_ENABLED(CONFIG_ZMK_USB) && !IS_ENABLED(CONFIG_ZMK_OUTPUT_FALLBACK) &&
++            !zmk_ble_active_profile_is_connected()) {
++            return -ENOTCONN;
++        }
+         struct zmk_hid_mouse_report *mouse_report = zmk_hid_get_mouse_report();
+         int err = zmk_hog_send_mouse_report(&mouse_report->body);
+         if (err) {
+@@ -282,6 +294,11 @@ static bool is_ble_ready(void) {
+ }
+ 
+ static enum zmk_transport get_selected_transport(void) {
++    if (IS_ENABLED(CONFIG_ZMK_USB) && IS_ENABLED(CONFIG_ZMK_BLE) &&
++        !IS_ENABLED(CONFIG_ZMK_OUTPUT_FALLBACK)) {
++        return preferred_transport;
++    }
++
+     if (is_ble_ready()) {
+         if (is_usb_ready()) {
+             LOG_DBG("Both endpoint transports are ready. Using %d", preferred_transport);

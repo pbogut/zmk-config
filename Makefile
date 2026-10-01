@@ -5,7 +5,7 @@ help:
 KYRIA_DONGLE_BOARD ?= nice_nano_v2
 KYRIA_DONGLE_MOUNT ?= /run/media/pbogut/NICENANO
 ZMK_DIR ?= $(CURDIR)/zmk
-ZMK_PATCHES := nice_view_battery_percentage.patch volatile_output_selection.patch
+ZMK_PATCHES := nice_view_battery_percentage.patch volatile_output_selection.patch strict_output_selection.patch
 
 build_kyria_left build_kyria_right build_kyria_dongle build_kyria_settings_reset: | patch
 
