@@ -139,6 +139,11 @@
             key-positions = <0 17>;
             bindings = <&to BASE>;
         };
+        combo_f15 {
+            timeout-ms = <150>;
+            key-positions = <19 20>;
+            bindings = <&kp F15>;
+        };
     };
 
     keymap {
